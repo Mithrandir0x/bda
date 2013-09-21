@@ -4,8 +4,6 @@
  */
 package edu.ub.bda.ubticket.beans;
 
-import java.util.Set;
-
 /**
  *
  * @author domenicocitera
@@ -18,24 +16,22 @@ public class Espacio {
     private String telefono;
     private String email;
     private String direccion;
-    private Integer cordinadax;
-    private Integer cordinaday;
-    private Set<Espectaculo> espectaculo;
-    private Set<Sesion> sesion;
+    private Float longitud;
+    private Float latitud;
 
     public Espacio() {
     }
 
     public Espacio(String nombre, Integer aforo, String telefono, String email,
-            String direccion, Integer cordinadax, Integer cordinatay) {
+            String direccion, Float longitud, Float latitud) {
         super();
         this.nombre = nombre;
         this.aforo = aforo;
         this.telefono = telefono;
         this.email = email;
         this.direccion = direccion;
-        this.cordinadax = cordinadax;
-        this.cordinaday = cordinaday;
+        this.longitud = longitud;
+        this.latitud = latitud;
     }
 
     public Integer getId() {
@@ -70,21 +66,60 @@ public class Espacio {
         this.telefono = telefono;
     }
 
-    
-    //GETTERS I SETTERS DE LE RELACIO N-N
-    public Set<Espectaculo> getEspectaculo() {
-        return espectaculo;
+    /**
+     * @return the aforo
+     */
+    public Integer getAforo() {
+        return aforo;
     }
 
-    public void setEspectaculo(Set<Espectaculo> espectaculo) {
-        this.espectaculo = espectaculo;
+    /**
+     * @return the email
+     */
+    public String getEmail() {
+        return email;
     }
-    
-    public Set<Sesion>getSesion() {
-        return sesion;
+
+    /**
+     * @param aforo the aforo to set
+     */
+    public void setAforo(Integer aforo) {
+        this.aforo = aforo;
     }
-    
-    public void setSesion(Set<Sesion> sesion) {
-        this.sesion=sesion;
+
+    /**
+     * @param email the email to set
+     */
+    public void setEmail(String email) {
+        this.email = email;
     }
+
+    /**
+     * @return the longitud
+     */
+    public Float getLongitud() {
+        return longitud;
+    }
+
+    /**
+     * @return the latitud
+     */
+    public Float getLatitud() {
+        return latitud;
+    }
+
+    /**
+     * @param longitud the longitud to set
+     */
+    public void setLongitud(Float longitud) {
+        this.longitud = longitud;
+    }
+
+    /**
+     * @param latitud the latitud to set
+     */
+    public void setLatitud(Float latitud) {
+        this.latitud = latitud;
+    }
+
 }
