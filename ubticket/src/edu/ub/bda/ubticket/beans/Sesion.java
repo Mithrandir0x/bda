@@ -15,33 +15,10 @@ public class Sesion {
     private Integer id;
     private Timestamp fecha_inicio;
     private Timestamp fecha_finalizacion;
-    private Integer entradas_vendidas;
     private Espectaculo espectaculo;
     private Espacio espacio;
 
     public Sesion() {
-    }
-
-    public Sesion(Timestamp fecha_inicio, Timestamp fecha_finalizacion, Integer entradas_vendidas) {
-        this.fecha_inicio = fecha_inicio;
-        this.fecha_finalizacion = fecha_finalizacion;
-        this.entradas_vendidas = entradas_vendidas;
-    }
-
-    public Espectaculo getEspectaculo() {
-        return espectaculo;
-    }
-
-    public void setEspectaculo(Espectaculo espectaculo) {
-        this.espectaculo = espectaculo;
-    }
-
-    public Espacio getEspacio() {
-        return espacio;
-    }
-
-    public void setSesion(Espacio espacio) {
-        this.espacio = espacio;
     }
 
     /**
@@ -66,10 +43,17 @@ public class Sesion {
     }
 
     /**
-     * @return the entradas_vendidas
+     * @return the espectaculo
      */
-    public Integer getEntradas_vendidas() {
-        return entradas_vendidas;
+    public Espectaculo getEspectaculo() {
+        return espectaculo;
+    }
+
+    /**
+     * @return the espacio
+     */
+    public Espacio getEspacio() {
+        return espacio;
     }
 
     /**
@@ -80,24 +64,31 @@ public class Sesion {
     }
 
     /**
-     * @param fecha_inicio
+     * @param fecha_inicio the fecha_inicio to set
      */
     public void setFecha_inicio(Timestamp fecha_inicio) {
         this.fecha_inicio = fecha_inicio;
     }
 
     /**
-     * @param fecha_finalizacion
+     * @param fecha_finalizacion the fecha_finalizacion to set
      */
     public void setFecha_finalizacion(Timestamp fecha_finalizacion) {
         this.fecha_finalizacion = fecha_finalizacion;
     }
 
     /**
-     * @param entradas_vendidas
+     * @param espectaculo the espectaculo to set
      */
-    public void setEntradas_vendidas(Integer entradas_vendidas) {
-        this.entradas_vendidas = entradas_vendidas;
+    public void setEspectaculo(Espectaculo espectaculo) {
+        this.espectaculo = espectaculo;
+    }
+
+    /**
+     * @param espacio the espacio to set
+     */
+    public void setEspacio(Espacio espacio) {
+        this.espacio = espacio;
     }
 
 }

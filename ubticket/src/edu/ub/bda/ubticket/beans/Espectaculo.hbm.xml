@@ -6,9 +6,9 @@
             <generator class="identity" />
         </id>
         <property name="titulo" column="TITULO" />
-        <property name="descripcion" column="DESCRIPCION" />        
+        <property name="descripcion" column="DESCRIPCION" />
         <many-to-one name="categoria" class="edu.ub.bda.ubticket.beans.Categoria" fetch="select">
-            <column name="ID_CATEGORIA" /> <!-- CAMP FK de la taula articulo IDENTICS A LES DUES ENTITATS --> 
+            <column name="CATEGORIA_ID" />
         </many-to-one>
     </class>
 </hibernate-mapping>

@@ -22,18 +22,6 @@ public class Espacio {
     public Espacio() {
     }
 
-    public Espacio(String nombre, Integer aforo, String telefono, String email,
-            String direccion, Float longitud, Float latitud) {
-        super();
-        this.nombre = nombre;
-        this.aforo = aforo;
-        this.telefono = telefono;
-        this.email = email;
-        this.direccion = direccion;
-        this.longitud = longitud;
-        this.latitud = latitud;
-    }
-
     public Integer getId() {
         return id;
     }

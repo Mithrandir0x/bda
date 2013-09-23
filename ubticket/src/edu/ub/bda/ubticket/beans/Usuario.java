@@ -18,11 +18,7 @@ public class Usuario {
     private String nombre;
     private Timestamp fecha_alta;
 
-    public Usuario(String login, String password, String nombre, Timestamp fecha_alta) {
-        this.login = login;
-        this.password = password;
-        this.nombre = nombre;
-        this.fecha_alta = fecha_alta;
+    public Usuario() {
     }
 
     /**
@@ -56,7 +52,7 @@ public class Usuario {
     /**
      * @return the fecha_alta
      */
-    public Timestamp getFechaAlta() {
+    public Timestamp getFecha_alta() {
         return fecha_alta;
     }
 
@@ -68,30 +64,31 @@ public class Usuario {
     }
 
     /**
-     * @param login
+     * @param login the login to set
      */
     public void setLogin(String login) {
         this.login = login;
     }
 
     /**
-     * @param password
+     * @param password the password to set
      */
     public void setPassword(String password) {
         this.password = password;
     }
 
     /**
-     * @param nombre
+     * @param nombre the nombre to set
      */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
     /**
-     * @param fecha_alta
+     * @param fecha_alta the fecha_alta to set
      */
-    public void setFechaAlta(Timestamp fecha_alta) {
+    public void setFecha_alta(Timestamp fecha_alta) {
         this.fecha_alta = fecha_alta;
     }
+
 }

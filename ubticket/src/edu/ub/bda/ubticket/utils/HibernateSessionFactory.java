@@ -9,10 +9,11 @@ import org.hibernate.cfg.Configuration;
  *
  * @author olopezsa13
  */
-public class ConectorHB
+public class HibernateSessionFactory
 {
     
     private static SessionFactory sf = null;
+    private static Session s = null;
   
     static
     {
@@ -28,8 +29,13 @@ public class ConectorHB
         }
     }
 
-    public static Session getSession(){
-        Session session = sf.openSession();
-        return session;
+    public static Session getSession()
+    {
+        if ( s == null )
+        {
+            s = sf.openSession();
+        }
+        
+        return s;
     }
 }

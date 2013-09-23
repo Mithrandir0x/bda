@@ -17,10 +17,7 @@ public class Entrada {
     private Sesion sesion;
     private Usuario usuario;
 
-    public Entrada(Integer precio, Integer fila, Integer asiento) {
-        this.precio = precio;
-        this.fila = fila;
-        this.asiento = asiento;
+    public Entrada() {
     }
 
     /**
@@ -73,37 +70,38 @@ public class Entrada {
     }
 
     /**
-     * @param precio
+     * @param precio the precio to set
      */
     public void setPrecio(Integer precio) {
         this.precio = precio;
     }
 
     /**
-     * @param fila
+     * @param fila the fila to set
      */
     public void setFila(Integer fila) {
         this.fila = fila;
     }
 
     /**
-     * @param asiento
+     * @param asiento the asiento to set
      */
     public void setAsiento(Integer asiento) {
         this.asiento = asiento;
     }
 
     /**
-     * @param sesion
+     * @param sesion the sesion to set
      */
     public void setSesion(Sesion sesion) {
         this.sesion = sesion;
     }
 
     /**
-     * @param usuario
+     * @param usuario the usuario to set
      */
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+
 }

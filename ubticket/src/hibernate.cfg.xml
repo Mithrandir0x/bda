@@ -4,17 +4,23 @@
   <session-factory>
     <property name="hibernate.dialect">edu.ub.bda.ubticket.utils.SQLiteDialect</property>
     <property name="hibernate.connection.driver_class">org.sqlite.JDBC</property>
-    <property name="hibernate.connection.url">jdbc:sqlite:database.sqlite</property>
-    <property name="hibernate.connection.username"/>
-    <property name="hibernate.connection.password"/>
+    <!-- source: http://stackoverflow.com/questions/12019974/include-sqlite-database-in-executable-jar -->
+    <!-- property name="hibernate.connection.url">jdbc:sqlite::resource:p01.db</property -->
+    <property name="hibernate.connection.url">jdbc:sqlite:D:/bda_dbs/p01.db</property>
+    <property name="hibernate.connection.username" />
+    <property name="hibernate.connection.password" />
     <!-- property name="hibernate.default_schema">hibernate</property -->
     <property name="hibernate.connection.charset">UTF-8</property>
     <!-- Definimos propiedades de Hibernate para SQL -->
-    <property name="show_sql">false</property>
+    <property name="show_sql">true</property>
     <property name="format_sql">true</property>
     <!-- none, update, create -->
-    <property name="hibernate.hbm2ddl.auto">none</property>
-    <mapping resource="edu/ub/bda/ubticket/beans/Espectaculo.hbm.xml"/>
+    <!-- property name="hibernate.hbm2ddl.auto">none</property -->
     <mapping resource="edu/ub/bda/ubticket/beans/Categoria.hbm.xml"/>
+    <mapping resource="edu/ub/bda/ubticket/beans/Espectaculo.hbm.xml"/>
+    <mapping resource="edu/ub/bda/ubticket/beans/Espacio.hbm.xml"/>
+    <mapping resource="edu/ub/bda/ubticket/beans/Sesion.hbm.xml"/>
+    <mapping resource="edu/ub/bda/ubticket/beans/Entrada.hbm.xml"/>
+    <mapping resource="edu/ub/bda/ubticket/beans/Usuario.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

@@ -42,27 +42,43 @@ public class RegistroWindow extends Window
         right.addComponent(login);
         right.addComponent(password);
         
-        p.addComponent(left);
-        p.addComponent(right);
-        addComponent(p);
-        
-        addComponent(new Button("OK", new Action() {
+        right.addComponent(new Button("OK", new Action() {
 
             @Override
             public void doAction()
             {
-                // Validate data
-                if ( AutenticacionServicio.Registrar(login.getText(), password.getText()) )
+                try
                 {
-                    ubticket.iniciarSesion();
+                    // Validate data
+                    if ( AutenticacionServicio.Registrar(login.getText(), password.getText()) )
+                    {
+                        ubticket.iniciarSesion();
+                        return;
+                    }
                 }
-                else
+                catch ( Exception ex )
                 {
-                    MessageBox.showMessageBox(ubticket.getGUIScreen(), "Atención", "No existe el usuario o la contraseña es incorrecta.");
+                    ex.printStackTrace();
                 }
+                
+                MessageBox.showMessageBox(ubticket.getGUIScreen(), "Atención", "No existe el usuario o la contraseña es incorrecta.");
             }
         
         }));
+        
+        left.addComponent(new Button("SALIR", new Action() {
+
+            @Override
+            public void doAction()
+            {
+                ubticket.cerrar();
+            }
+        
+        }));
+        
+        p.addComponent(left);
+        p.addComponent(right);
+        addComponent(p);
     }
     
     @Override
