@@ -23,6 +23,7 @@ public class MenuPrincipalWindow extends Window
             @Override
             public void doAction()
             {
+                ubticket.gestionarContenidos();
             }
         
         }));
