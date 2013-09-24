@@ -5,6 +5,7 @@ import com.googlecode.lanterna.gui.Window;
 import com.googlecode.lanterna.gui.component.Button;
 import edu.ub.bda.UBTicket;
 import edu.ub.bda.ubticket.beans.Categoria;
+import edu.ub.bda.ubticket.beans.Espacio;
 import edu.ub.bda.ubticket.beans.Espectaculo;
 
 /**
@@ -35,6 +36,16 @@ public class GestionContenidosWindow extends Window
             public void doAction()
             {
                 ubticket.getGUIScreen().showWindow(new GestorGenericoWindow(ubticket, Espectaculo.class));
+            }
+        
+        }));
+        
+        addComponent(new Button("2. Espacios", new Action() {
+
+            @Override
+            public void doAction()
+            {
+                ubticket.getGUIScreen().showWindow(new GestorGenericoWindow(ubticket, Espacio.class));
             }
         
         }));

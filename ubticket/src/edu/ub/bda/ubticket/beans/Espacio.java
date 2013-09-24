@@ -20,6 +20,9 @@ public class Espacio {
     private Float latitud;
 
     public Espacio() {
+        aforo = new Integer(0);
+        longitud = new Float(0.0);
+        latitud = new Float(0.0);
     }
 
     public Integer getId() {

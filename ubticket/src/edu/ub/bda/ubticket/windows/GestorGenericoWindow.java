@@ -11,9 +11,11 @@ import com.googlecode.lanterna.gui.dialog.MessageBox;
 import com.googlecode.lanterna.gui.dialog.TextInputDialog;
 import edu.ub.bda.UBTicket;
 import edu.ub.bda.ubticket.beans.Categoria;
+import edu.ub.bda.ubticket.beans.Espacio;
 import edu.ub.bda.ubticket.beans.Espectaculo;
 import edu.ub.bda.ubticket.utils.HibernateTransaction;
 import edu.ub.bda.ubticket.windows.gestioncontenidos.CategoriaEditorWindow;
+import edu.ub.bda.ubticket.windows.gestioncontenidos.EspacioEditorWindow;
 import edu.ub.bda.ubticket.windows.gestioncontenidos.EspectaculoEditorWindow;
 import java.util.List;
 import org.hibernate.Query;
@@ -54,6 +56,10 @@ public class GestorGenericoWindow extends Window
                 {
                     ubticket.getGUIScreen().showWindow(new EspectaculoEditorWindow(ubticket, (GestorGenericoWindow) self));
                 }
+                else if ( claseEntidad == Espacio.class )
+                {
+                    ubticket.getGUIScreen().showWindow(new EspacioEditorWindow(ubticket, (GestorGenericoWindow) self));
+                }
             }
         
         }));
@@ -92,6 +98,10 @@ public class GestorGenericoWindow extends Window
                             else if ( entidad instanceof Espectaculo )
                             {
                                 ubticket.getGUIScreen().showWindow(new EspectaculoEditorWindow(ubticket, (GestorGenericoWindow) self, (Espectaculo) entidad));
+                            }
+                            else if ( entidad instanceof Espacio )
+                            {
+                                ubticket.getGUIScreen().showWindow(new EspacioEditorWindow(ubticket, (GestorGenericoWindow) self, (Espacio) entidad));
                             }
                         }
                         else
@@ -215,6 +225,13 @@ public class GestorGenericoWindow extends Window
                     tabla.addRow(new Label(o.getId().toString()),
                             new Label(o.getTitulo()),
                             new Label(o.getCategoria().getNombre()));
+                }
+                else if ( objeto instanceof Espacio )
+                {
+                    Espacio o = (Espacio) objeto;
+                    tabla.addRow(new Label(o.getId().toString()),
+                            new Label(o.getNombre()),
+                            new Label(o.getDireccion()));
                 }
             }
         
