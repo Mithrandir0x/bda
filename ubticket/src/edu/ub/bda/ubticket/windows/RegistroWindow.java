@@ -33,7 +33,7 @@ public class RegistroWindow extends Window
         Panel p = new Panel(new Border.Invisible(), Panel.Orientation.HORISONTAL);
         
         Panel left = new Panel(new Border.Invisible(), Panel.Orientation.VERTICAL);
-        left.addComponent(new Label("LOGIN:"));
+        left.addComponent(new Label("   LOGIN:"));
         left.addComponent(new Label("PASSWORD:"));
         
         Panel right = new Panel(new Border.Invisible(), Panel.Orientation.VERTICAL);

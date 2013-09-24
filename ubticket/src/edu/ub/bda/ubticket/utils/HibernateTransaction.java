@@ -46,6 +46,8 @@ public abstract class HibernateTransaction<T>
                     if ( transaction != null )
                         transaction.commit();
                 }
+                
+                session.flush();
             }
             
             return returnValue;

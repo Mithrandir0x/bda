@@ -43,4 +43,10 @@ public class Categoria
         this.nombre = nombre;
     }
     
+    @Override
+    public String toString()
+    {
+        return "" + id.toString() + ". " + nombre;
+    }
+    
 }

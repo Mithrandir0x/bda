@@ -13,7 +13,8 @@ import edu.ub.bda.UBTicket;
 import edu.ub.bda.ubticket.beans.Categoria;
 import edu.ub.bda.ubticket.beans.Espectaculo;
 import edu.ub.bda.ubticket.utils.HibernateTransaction;
-import java.util.ArrayList;
+import edu.ub.bda.ubticket.windows.gestioncontenidos.CategoriaEditorWindow;
+import edu.ub.bda.ubticket.windows.gestioncontenidos.EspectaculoEditorWindow;
 import java.util.List;
 import org.hibernate.Query;
 
@@ -45,20 +46,71 @@ public class GestorGenericoWindow extends Window
             @Override
             public void doAction()
             {
+                if ( claseEntidad == Categoria.class )
+                {
+                    ubticket.getGUIScreen().showWindow(new CategoriaEditorWindow((GestorGenericoWindow) self));
+                }
+                else if ( claseEntidad == Espectaculo.class )
+                {
+                    ubticket.getGUIScreen().showWindow(new EspectaculoEditorWindow(ubticket, (GestorGenericoWindow) self));
+                }
             }
         
         }));
         
         p.addComponent(new Button("EDITAR", new Action() {
+            
+            final String nombreClaseEntidad = claseEntidad.getSimpleName();
 
             @Override
             public void doAction()
             {
+                String input = TextInputDialog.showTextInputBox(ubticket.getGUIScreen(), "Atención", "¿Qué tabla desea eliminar?", "");
+                
+                if ( input != null && input.length() != 0 )
+                {
+                    try
+                    {
+                        final Integer i = Integer.parseInt(input);
+                        
+                        Object entidad = new HibernateTransaction<Object>() {
+
+                            @Override
+                            public Object run()
+                            {
+                                return session.byId(claseEntidad).load(i);
+                            }
+
+                        }.execute();
+                        
+                        if ( entidad != null )
+                        {
+                            if ( entidad instanceof Categoria )
+                            {
+                                ubticket.getGUIScreen().showWindow(new CategoriaEditorWindow((GestorGenericoWindow) self, (Categoria) entidad));
+                            }
+                            else if ( entidad instanceof Espectaculo )
+                            {
+                                ubticket.getGUIScreen().showWindow(new EspectaculoEditorWindow(ubticket, (GestorGenericoWindow) self, (Espectaculo) entidad));
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.showMessageBox(ubticket.getGUIScreen(), "Atención", "No se ha encontrado ninguna entidad con tal identificador.");
+                        }
+                    }
+                    catch ( NumberFormatException ex )
+                    {
+                        MessageBox.showMessageBox(ubticket.getGUIScreen(), "Atención", "Identificador inválido.");
+                    }
+                }
             }
         
         }));
         
         p.addComponent(new Button("BORRAR", new Action() {
+            
+            final String nombreClaseEntidad = claseEntidad.getSimpleName();
 
             @Override
             public void doAction()
@@ -71,15 +123,28 @@ public class GestorGenericoWindow extends Window
                     {
                         final Integer i = Integer.parseInt(input);
                         
-                        /* new HibernateTransaction<Object>() {
+                        Integer entidadesBorradas = new HibernateTransaction<Integer>() {
 
                             @Override
-                            public Object run()
+                            public Integer run()
                             {
-                                return null;
+                                int entidadesBorradas = session.createQuery("DELETE " + nombreClaseEntidad + " e WHERE e.id = :idEntidad")
+                                        .setString("idEntidad", i.toString())
+                                        .executeUpdate();
+                                return new Integer(entidadesBorradas);
                             }
 
-                        }.execute(); */
+                        }.execute();
+                        
+                        if ( entidadesBorradas.intValue() > 0 )
+                        {
+                            MessageBox.showMessageBox(ubticket.getGUIScreen(), "Información", "Se ha(n) borrado " + entidadesBorradas + " entrada(s).");
+                            actualizarTabla();
+                        }
+                        else
+                        {
+                            MessageBox.showMessageBox(ubticket.getGUIScreen(), "Atención", "No se ha encontrado ninguna entidad con tal identificador.");
+                        }
                     }
                     catch ( NumberFormatException ex )
                     {
@@ -90,7 +155,7 @@ public class GestorGenericoWindow extends Window
         
         }));
         
-        p.addComponent(new Button("Salir", new Action() {
+        p.addComponent(new Button("CANCELAR", new Action() {
 
             @Override
             public void doAction()
@@ -106,10 +171,14 @@ public class GestorGenericoWindow extends Window
     @Override
     public void onVisible()
     {
+        actualizarTabla();
+    }
+    
+    public void actualizarTabla()
+    {
         final String nombreClaseEntidad = claseEntidad.getSimpleName();
         
-        List<Object> list = new ArrayList<>();
-        list = new HibernateTransaction<List<Object>>() {
+        List<Object> list = new HibernateTransaction<List<Object>>() {
 
             @Override
             public List<Object> run()
@@ -122,7 +191,16 @@ public class GestorGenericoWindow extends Window
         
         if ( list != null && list.size() > 0 )
         {
-            tabla = new Table(8, "Contenido");
+            boolean addComponent = false;
+            if ( tabla == null )
+            {
+                tabla = new Table(8, "Contenido");
+                addComponent = true;
+            }
+            else
+            {
+                tabla.removeAllRows();
+            }
             
             for ( Object objeto : list )
             {                
@@ -140,7 +218,10 @@ public class GestorGenericoWindow extends Window
                 }
             }
         
-            panel.addComponent(tabla);
+            if ( addComponent )
+            {
+                panel.addComponent(tabla);
+            }
         }
     }
     
