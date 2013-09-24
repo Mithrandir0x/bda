@@ -2,6 +2,7 @@ package edu.ub.bda.ubticket.windows;
 
 import com.googlecode.lanterna.gui.Action;
 import com.googlecode.lanterna.gui.Border;
+import com.googlecode.lanterna.gui.DefaultBackgroundRenderer;
 import com.googlecode.lanterna.gui.Window;
 import com.googlecode.lanterna.gui.component.Button;
 import com.googlecode.lanterna.gui.component.Label;
@@ -9,8 +10,8 @@ import com.googlecode.lanterna.gui.component.Panel;
 import com.googlecode.lanterna.gui.component.PasswordBox;
 import com.googlecode.lanterna.gui.component.TextBox;
 import com.googlecode.lanterna.gui.dialog.MessageBox;
-import com.googlecode.lanterna.terminal.Terminal;
 import edu.ub.bda.UBTicket;
+import edu.ub.bda.ubticket.beans.Usuario;
 import edu.ub.bda.ubticket.utils.AutenticacionServicio;
 
 /**
@@ -29,7 +30,6 @@ public class RegistroWindow extends Window
         
         this.setSoloWindow(true);
         
-        addComponent(new Label("EXTERMINATE", Terminal.Color.RED));
         Panel p = new Panel(new Border.Invisible(), Panel.Orientation.HORISONTAL);
         
         Panel left = new Panel(new Border.Invisible(), Panel.Orientation.VERTICAL);
@@ -37,8 +37,8 @@ public class RegistroWindow extends Window
         left.addComponent(new Label("PASSWORD:"));
         
         Panel right = new Panel(new Border.Invisible(), Panel.Orientation.VERTICAL);
-        login = new TextBox();
-        password = new PasswordBox();
+        login = new TextBox("", 16);
+        password = new PasswordBox("", 16);
         right.addComponent(login);
         right.addComponent(password);
         
@@ -52,6 +52,8 @@ public class RegistroWindow extends Window
                     // Validate data
                     if ( AutenticacionServicio.Registrar(login.getText(), password.getText()) )
                     {
+                        Usuario usuario = AutenticacionServicio.GetUsuario();
+                        ((DefaultBackgroundRenderer) ubticket.getGUIScreen().getBackgroundRenderer()).setTitle("ubticket [" + usuario.getNombre() + "]");
                         ubticket.iniciarSesion();
                         return;
                     }

@@ -1,6 +1,7 @@
 package edu.ub.bda;
 
 import com.googlecode.lanterna.TerminalFacade;
+import com.googlecode.lanterna.gui.DefaultBackgroundRenderer;
 import com.googlecode.lanterna.gui.GUIScreen;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.Terminal;
@@ -33,6 +34,8 @@ public class UBTicket
         terminal = TerminalFacade.createTerminal(System.in, System.out, Charset.forName("UTF8"));
         gui = TerminalFacade.createGUIScreen(terminal);
         screen = gui.getScreen();
+        
+        ((DefaultBackgroundRenderer) gui.getBackgroundRenderer()).setTitle("ubticket");
         
         inicializarComponentes();
         
@@ -77,6 +80,7 @@ public class UBTicket
     
     public void cerrarSesion()
     {
+        ((DefaultBackgroundRenderer) gui.getBackgroundRenderer()).setTitle("ubticket");
         menuPrincipalWindow.close();
         gui.invalidate();
         gui.showWindow(registroWindow);
