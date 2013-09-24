@@ -61,7 +61,7 @@ public class EspectaculoEditorWindow extends Window
         left.addComponent(new Label("  CATEGORÍA:"));
         
         Panel right = new Panel(new Border.Invisible(), Panel.Orientation.VERTICAL);
-        tituloTextBox = new TextBox(espectaculo.getTitulo());
+        tituloTextBox = new TextBox(espectaculo.getTitulo(), 50);
         descripcionTextArea = new TextBox(espectaculo.getDescripcion(), 50);
         
         if ( espectaculo.getCategoria() != null )

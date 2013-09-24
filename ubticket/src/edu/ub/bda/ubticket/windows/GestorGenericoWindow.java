@@ -117,7 +117,7 @@ public class GestorGenericoWindow extends Window
             {
                 String input = TextInputDialog.showTextInputBox(ubticket.getGUIScreen(), "Atención", "¿Qué tabla desea eliminar?", "");
                 
-                if ( input.length() != 0 )
+                if ( input != null && input.length() != 0 )
                 {
                     try
                     {
