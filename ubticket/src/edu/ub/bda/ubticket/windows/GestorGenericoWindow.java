@@ -29,7 +29,12 @@ public class GestorGenericoWindow extends Window
     
     private Class<?> claseEntidad;
     private Table tabla;
-    private Panel panel;
+    private Panel tablaPanel;
+    private Label paginaEtiqueta;
+    
+    private Integer maxFilas = 15;
+    private Integer pagina = 0;
+    private Integer maxPaginas = 0;
 
     public GestorGenericoWindow(final UBTicket ubticket, Class c)
     {
@@ -38,12 +43,48 @@ public class GestorGenericoWindow extends Window
         
         claseEntidad = c;
         
-        panel = new Panel(new Border.Invisible(), Panel.Orientation.HORISONTAL);
-        addComponent(panel);
+        tablaPanel = new Panel(new Border.Invisible(), Panel.Orientation.HORISONTAL);
+        addComponent(tablaPanel);
         
-        Panel p = new Panel(new Border.Invisible(), Panel.Orientation.HORISONTAL);
+        Panel paginadorPanel = new Panel(new Border.Invisible(), Panel.Orientation.HORISONTAL);        
         
-        p.addComponent(new Button("CREAR", new Action() {
+        paginadorPanel.addComponent(new Button("<--", new Action() {
+
+            @Override
+            public void doAction()
+            {
+                if ( pagina > 0 )
+                {
+                    pagina--;
+                    actualizarTabla();
+                }
+            }
+        
+        }));
+        
+        paginaEtiqueta = new Label();
+        paginaEtiqueta.setText(getTextoPagina());
+        paginadorPanel.addComponent(paginaEtiqueta);
+        
+        paginadorPanel.addComponent(new Button("-->", new Action() {
+
+            @Override
+            public void doAction()
+            {
+                if ( ( pagina + 1 ) < maxPaginas )
+                {
+                    pagina++;
+                    actualizarTabla();
+                }
+            }
+        
+        }));
+        
+        addComponent(paginadorPanel);
+        
+        Panel botonesPanel = new Panel(new Border.Invisible(), Panel.Orientation.HORISONTAL);
+        
+        botonesPanel.addComponent(new Button("CREAR", new Action() {
 
             @Override
             public void doAction()
@@ -64,7 +105,7 @@ public class GestorGenericoWindow extends Window
         
         }));
         
-        p.addComponent(new Button("EDITAR", new Action() {
+        botonesPanel.addComponent(new Button("EDITAR", new Action() {
             
             final String nombreClaseEntidad = claseEntidad.getSimpleName();
 
@@ -118,7 +159,7 @@ public class GestorGenericoWindow extends Window
         
         }));
         
-        p.addComponent(new Button("BORRAR", new Action() {
+        botonesPanel.addComponent(new Button("BORRAR", new Action() {
             
             final String nombreClaseEntidad = claseEntidad.getSimpleName();
 
@@ -165,7 +206,7 @@ public class GestorGenericoWindow extends Window
         
         }));
         
-        p.addComponent(new Button("CANCELAR", new Action() {
+        botonesPanel.addComponent(new Button("CANCELAR", new Action() {
 
             @Override
             public void doAction()
@@ -175,7 +216,7 @@ public class GestorGenericoWindow extends Window
         
         }));
         
-        addComponent(p);
+        addComponent(botonesPanel);
     }
     
     @Override
@@ -188,12 +229,16 @@ public class GestorGenericoWindow extends Window
     {
         final String nombreClaseEntidad = claseEntidad.getSimpleName();
         
+        actualizarPagina();
+        
         List<Object> list = new HibernateTransaction<List<Object>>() {
 
             @Override
             public List<Object> run()
             {
                 Query query = session.createQuery("from " + nombreClaseEntidad);
+                query.setFirstResult(pagina * 15);
+                query.setMaxResults(maxFilas);
                 return query.list();
             }
         
@@ -237,9 +282,33 @@ public class GestorGenericoWindow extends Window
         
             if ( addComponent )
             {
-                panel.addComponent(tabla);
+                tablaPanel.addComponent(tabla);
             }
         }
+    }
+    
+    private String getTextoPagina()
+    {
+        Integer pag = pagina + 1;
+        return pag.toString() + " / " + maxPaginas.toString();
+    }
+    
+    private void actualizarPagina()
+    {
+        final String nombreClaseEntidad = claseEntidad.getSimpleName();
+        
+        Long numFilas = new HibernateTransaction<Long>() {
+
+            @Override
+            public Long run()
+            {
+                return (Long) session.createQuery("select count(*) from " + nombreClaseEntidad).iterate().next();
+            }
+        
+        }.execute();
+        Double maxPaginasFP = numFilas.doubleValue() / maxFilas.doubleValue();
+        maxPaginas = (int) Math.ceil(maxPaginasFP.doubleValue());
+        paginaEtiqueta.setText(getTextoPagina());
     }
     
     /* private void escribirFilaTabla(Object object)

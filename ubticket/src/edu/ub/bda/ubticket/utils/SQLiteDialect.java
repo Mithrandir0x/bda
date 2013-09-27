@@ -212,5 +212,19 @@ public class SQLiteDialect extends Dialect
     {
         return false;
     }
+    
+    /**
+     * A problem when using paginated queries, OFFSET parameter in a query does not resolve as it should.
+     * Adding this method allows to solve the issue.
+     * 
+     * Source: http://stackoverflow.com/questions/15028043/
+     * 
+     * @return 
+     */
+    @Override
+    public boolean bindLimitParametersInReverseOrder()
+    {
+        return true;
+    }
 
 }

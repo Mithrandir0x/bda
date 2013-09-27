@@ -6,7 +6,8 @@
             <generator class="identity" />
         </id>
         <property name="fecha_inicio" column="FECHA_INICIO" />
-        <property name="fecha_finalizacion" column="FECHA_FINALIZACION" />        
+        <property name="fecha_finalizacion" column="FECHA_FINALIZACION" />
+        <property name="precio" column="PRECIO" />
         <many-to-one name="espectaculo" class="edu.ub.bda.ubticket.beans.Espectaculo" fetch="select">
             <column name="ID_ESPECTACULO" /> <!-- CAMP FK --> 
         </many-to-one>

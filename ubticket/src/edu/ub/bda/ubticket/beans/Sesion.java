@@ -15,6 +15,7 @@ public class Sesion {
     private Integer id;
     private Timestamp fecha_inicio;
     private Timestamp fecha_finalizacion;
+    private Integer precio;
     private Espectaculo espectaculo;
     private Espacio espacio;
 
@@ -89,6 +90,20 @@ public class Sesion {
      */
     public void setEspacio(Espacio espacio) {
         this.espacio = espacio;
+    }
+
+    /**
+     * @return the precio
+     */
+    public Integer getPrecio() {
+        return precio;
+    }
+
+    /**
+     * @param precio the precio to set
+     */
+    public void setPrecio(Integer precio) {
+        this.precio = precio;
     }
 
 }
