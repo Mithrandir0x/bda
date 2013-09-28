@@ -51,7 +51,7 @@ public class GestionContenidosWindow extends Window
         
         }));
         
-        addComponent(new Button("4. Usuari", new Action() {
+        addComponent(new Button("4. Usuarios", new Action() {
 
             @Override
             public void doAction()
