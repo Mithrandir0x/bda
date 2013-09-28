@@ -80,6 +80,7 @@ public class ComprarEntradasWindow extends Window
                 Espacio esp = ListSelectDialog.showDialog(ubticket.getGUIScreen(), "ATENCIÓN", "Seleccione el espacio:", vector);
                 if ( esp != null )
                 {
+                    pagina = 0;
                     espacio.copyFrom(esp);
                     seleccionarEspacioButton.setText(esp.getNombre());
                     paginadorPanel.setVisible(true);
