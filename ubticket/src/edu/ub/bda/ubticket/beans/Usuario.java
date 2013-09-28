@@ -19,6 +19,9 @@ public class Usuario {
     private Timestamp fecha_alta;
 
     public Usuario() {
+        login = "";
+        password = "";
+        nombre = "";
     }
 
     /**
