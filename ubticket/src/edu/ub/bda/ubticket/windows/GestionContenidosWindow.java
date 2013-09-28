@@ -7,6 +7,7 @@ import edu.ub.bda.UBTicket;
 import edu.ub.bda.ubticket.beans.Categoria;
 import edu.ub.bda.ubticket.beans.Espacio;
 import edu.ub.bda.ubticket.beans.Espectaculo;
+import edu.ub.bda.ubticket.beans.Usuario;
 
 /**
  *
@@ -40,12 +41,22 @@ public class GestionContenidosWindow extends Window
         
         }));
         
-        addComponent(new Button("2. Espacios", new Action() {
+        addComponent(new Button("3. Espacios", new Action() {
 
             @Override
             public void doAction()
             {
                 ubticket.getGUIScreen().showWindow(new GestorGenericoWindow(ubticket, Espacio.class));
+            }
+        
+        }));
+        
+        addComponent(new Button("4. Usuari", new Action() {
+
+            @Override
+            public void doAction()
+            {
+                ubticket.getGUIScreen().showWindow(new GestorGenericoWindow(ubticket, Usuario.class));
             }
         
         }));
@@ -62,3 +73,4 @@ public class GestionContenidosWindow extends Window
     }
     
 }
+
