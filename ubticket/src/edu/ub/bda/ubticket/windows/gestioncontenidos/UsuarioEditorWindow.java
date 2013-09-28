@@ -1,4 +1,3 @@
-
 package edu.ub.bda.ubticket.windows.gestioncontenidos;
 
 import com.googlecode.lanterna.gui.Action;
@@ -7,8 +6,10 @@ import com.googlecode.lanterna.gui.Window;
 import com.googlecode.lanterna.gui.component.Button;
 import com.googlecode.lanterna.gui.component.Label;
 import com.googlecode.lanterna.gui.component.Panel;
+import com.googlecode.lanterna.gui.component.PasswordBox;
 import com.googlecode.lanterna.gui.component.TextBox;
 import com.googlecode.lanterna.gui.dialog.MessageBox;
+import com.googlecode.lanterna.terminal.TerminalSize;
 import edu.ub.bda.UBTicket;
 import edu.ub.bda.ubticket.beans.Usuario;
 import edu.ub.bda.ubticket.utils.HibernateTransaction;
@@ -29,8 +30,7 @@ public class UsuarioEditorWindow extends Window {
     private final UBTicket ubticket;
     private TextBox nombreTextBox;
     private TextBox loginTextBox;
-    private TextBox fechaTextBox;
-    private TextBox passwordTextBox;
+    private PasswordBox passwordTextBox;
 
     public UsuarioEditorWindow(final UBTicket ubticket, GestorGenericoWindow gestor) {
 
@@ -61,9 +61,11 @@ public class UsuarioEditorWindow extends Window {
 
 
         Panel right = new Panel(new Border.Invisible(), Panel.Orientation.VERTICAL);
-        loginTextBox = new TextBox(usuario.getLogin());
-        nombreTextBox = new TextBox(usuario.getNombre());
-        passwordTextBox = new TextBox(usuario.getPassword());
+        loginTextBox = new TextBox(usuario.getLogin(), 32);
+        nombreTextBox = new TextBox(usuario.getNombre(), 32);
+        passwordTextBox = new PasswordBox();
+        passwordTextBox.setPreferredSize(new TerminalSize(32, 1));
+        passwordTextBox.setText(usuario.getPassword());
 
         right.addComponent(loginTextBox);
         right.addComponent(nombreTextBox);
