@@ -33,6 +33,17 @@ public class MenuPrincipalWindow extends Window
             @Override
             public void doAction()
             {
+                ubticket.comprarEntradas();
+            }
+        
+        }));
+        
+        addComponent(new Button("  2.1. Ver entradas compradas", new Action() {
+
+            @Override
+            public void doAction()
+            {
+                ubticket.gestionarEntradas();
             }
         
         }));

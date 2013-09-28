@@ -248,7 +248,7 @@ public class GestorGenericoWindow extends Window
             public List<Object> run()
             {
                 Query query = session.createQuery("from " + nombreClaseEntidad);
-                query.setFirstResult(pagina * 15);
+                query.setFirstResult(pagina * maxFilas);
                 query.setMaxResults(maxFilas);
                 return query.list();
             }

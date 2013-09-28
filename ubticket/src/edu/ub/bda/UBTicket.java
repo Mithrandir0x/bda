@@ -5,7 +5,9 @@ import com.googlecode.lanterna.gui.DefaultBackgroundRenderer;
 import com.googlecode.lanterna.gui.GUIScreen;
 import com.googlecode.lanterna.screen.Screen;
 import com.googlecode.lanterna.terminal.Terminal;
+import edu.ub.bda.ubticket.windows.ComprarEntradasWindow;
 import edu.ub.bda.ubticket.windows.GestionContenidosWindow;
+import edu.ub.bda.ubticket.windows.GestorEntradasWindow;
 import edu.ub.bda.ubticket.windows.MenuPrincipalWindow;
 import edu.ub.bda.ubticket.windows.RegistroWindow;
 import java.nio.charset.Charset;
@@ -26,6 +28,8 @@ public class UBTicket
     private RegistroWindow registroWindow;
     private MenuPrincipalWindow menuPrincipalWindow;
     private GestionContenidosWindow gestionContenidosWindow;
+    private ComprarEntradasWindow comprarEntradasWindow;
+    private GestorEntradasWindow gestorEntradasWindow;
     
     public UBTicket(boolean activarAutenticacion)
     {
@@ -64,6 +68,8 @@ public class UBTicket
          registroWindow = new RegistroWindow(this);
          menuPrincipalWindow = new MenuPrincipalWindow(this);
          gestionContenidosWindow = new GestionContenidosWindow(this);
+         comprarEntradasWindow = new ComprarEntradasWindow(this);
+         gestorEntradasWindow = new GestorEntradasWindow();
     }
     
     public void iniciarSesion()
@@ -76,6 +82,16 @@ public class UBTicket
     public void gestionarContenidos()
     {
         gui.showWindow(gestionContenidosWindow);
+    }
+    
+    public void comprarEntradas()
+    {
+        gui.showWindow(comprarEntradasWindow, GUIScreen.Position.CENTER);
+    }
+    
+    public void gestionarEntradas()
+    {
+        gui.showWindow(gestorEntradasWindow, GUIScreen.Position.CENTER);
     }
     
     public void cerrarSesion()

@@ -11,7 +11,6 @@ package edu.ub.bda.ubticket.beans;
 public class Entrada {
 
     private Integer id;
-    private Integer precio;
     private Integer fila;
     private Integer asiento;
     private Sesion sesion;
@@ -25,13 +24,6 @@ public class Entrada {
      */
     public Integer getId() {
         return id;
-    }
-
-    /**
-     * @return the precio
-     */
-    public Integer getPrecio() {
-        return precio;
     }
 
     /**
@@ -67,13 +59,6 @@ public class Entrada {
      */
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    /**
-     * @param precio the precio to set
-     */
-    public void setPrecio(Integer precio) {
-        this.precio = precio;
     }
 
     /**

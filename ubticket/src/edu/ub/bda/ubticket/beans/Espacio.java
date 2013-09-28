@@ -112,5 +112,23 @@ public class Espacio {
     public void setLatitud(Float latitud) {
         this.latitud = latitud;
     }
+    
+    @Override
+    public String toString()
+    {
+        return "" + id.toString() + ". " + nombre;
+    }
+    
+    public void copyFrom(Espacio espacio)
+    {
+        id = espacio.getId();
+        nombre = espacio.getNombre();
+        aforo = espacio.getAforo();
+        telefono = espacio.getTelefono();
+        direccion = espacio.getDireccion();
+        email = espacio.getEmail();
+        longitud = espacio.getLongitud();
+        latitud = espacio.getLatitud();
+    }
 
 }
