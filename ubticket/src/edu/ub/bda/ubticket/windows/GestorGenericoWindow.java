@@ -13,10 +13,12 @@ import edu.ub.bda.UBTicket;
 import edu.ub.bda.ubticket.beans.Categoria;
 import edu.ub.bda.ubticket.beans.Espacio;
 import edu.ub.bda.ubticket.beans.Espectaculo;
+import edu.ub.bda.ubticket.beans.Usuario;
 import edu.ub.bda.ubticket.utils.HibernateTransaction;
 import edu.ub.bda.ubticket.windows.gestioncontenidos.CategoriaEditorWindow;
 import edu.ub.bda.ubticket.windows.gestioncontenidos.EspacioEditorWindow;
 import edu.ub.bda.ubticket.windows.gestioncontenidos.EspectaculoEditorWindow;
+import edu.ub.bda.ubticket.windows.gestioncontenidos.UsuarioEditorWindow;
 import java.util.List;
 import org.hibernate.Query;
 
@@ -101,9 +103,14 @@ public class GestorGenericoWindow extends Window
                 {
                     ubticket.getGUIScreen().showWindow(new EspacioEditorWindow(ubticket, (GestorGenericoWindow) self));
                 }
-            }
+                else if ( claseEntidad == Usuario.class )
+               {
+                    ubticket.getGUIScreen().showWindow(new UsuarioEditorWindow(ubticket, (GestorGenericoWindow) self));
+                }
         
+            }
         }));
+        
         
         botonesPanel.addComponent(new Button("EDITAR", new Action() {
             
@@ -112,7 +119,7 @@ public class GestorGenericoWindow extends Window
             @Override
             public void doAction()
             {
-                String input = TextInputDialog.showTextInputBox(ubticket.getGUIScreen(), "Atención", "¿Qué tabla desea eliminar?", "");
+                String input = TextInputDialog.showTextInputBox(ubticket.getGUIScreen(), "Atención", "¿Qué tabla desea editar?", "");
                 
                 if ( input != null && input.length() != 0 )
                 {
@@ -143,6 +150,10 @@ public class GestorGenericoWindow extends Window
                             else if ( entidad instanceof Espacio )
                             {
                                 ubticket.getGUIScreen().showWindow(new EspacioEditorWindow(ubticket, (GestorGenericoWindow) self, (Espacio) entidad));
+                            }
+                            else if ( entidad instanceof Usuario )
+                            {
+                                ubticket.getGUIScreen().showWindow(new UsuarioEditorWindow(ubticket, (GestorGenericoWindow) self, (Usuario) entidad));
                             }
                         }
                         else
@@ -278,6 +289,15 @@ public class GestorGenericoWindow extends Window
                             new Label(o.getNombre()),
                             new Label(o.getDireccion()));
                 }
+                else if ( objeto instanceof Usuario )
+                {
+                    Usuario o = (Usuario) objeto;
+                    tabla.addRow(new Label(o.getId().toString()),
+                            new Label(o.getLogin()),
+                            new Label(o.getNombre()),
+                            new Label(o.getFecha_alta().toString()));
+
+                }
             }
         
             if ( addComponent )
@@ -335,3 +355,4 @@ public class GestorGenericoWindow extends Window
     } */
     
 }
+
