@@ -1,10 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.ub.bda.ubticket.beans;
 
 /**
+ * Esta clase define la entrada de una sesion y de un usuario
  *
  * @author domenicocitera
  */
