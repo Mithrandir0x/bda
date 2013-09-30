@@ -29,6 +29,9 @@ public class HibernateSessionFactory
         }
     }
 
+     /**
+     * @return the sesion
+     */
     public static Session getSession()
     {
         if ( s == null )
