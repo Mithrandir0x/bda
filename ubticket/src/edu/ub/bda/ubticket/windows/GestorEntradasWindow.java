@@ -89,7 +89,12 @@ public class GestorEntradasWindow extends Window
             public void doAction()
             {
                 todoPanel.setVisible(false);
-                tabla.removeAllRows();
+                
+                if ( tabla != null )
+                {
+                    tabla.removeAllRows();
+                }
+                
                 close();
             }
         
