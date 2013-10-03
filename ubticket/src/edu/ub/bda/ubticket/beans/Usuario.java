@@ -16,6 +16,7 @@ public class Usuario {
     private String password;
     private String nombre;
     private Timestamp fecha_alta;
+    private Timestamp fecha_ultima_compra;
     private String tipo_usuario;
 
     public Usuario() {
@@ -107,6 +108,20 @@ public class Usuario {
      */
     public void setTipo_usuario(String aTipo_usuario) {
         tipo_usuario = aTipo_usuario;
+    }
+
+    /**
+     * @return the fecha_ultima_compra
+     */
+    public Timestamp getFecha_ultima_compra() {
+        return fecha_ultima_compra;
+    }
+
+    /**
+     * @param fecha_ultima_compra the fecha_ultima_compra to set
+     */
+    public void setFecha_ultima_compra(Timestamp fecha_ultima_compra) {
+        this.fecha_ultima_compra = fecha_ultima_compra;
     }
 
 }

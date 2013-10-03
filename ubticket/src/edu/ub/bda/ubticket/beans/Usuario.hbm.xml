@@ -9,6 +9,7 @@
         <property name="password" column="PASSWORD" />  
         <property name="nombre" column="NOMBRE" />
         <property name="fecha_alta" column="FECHA_ALTA" /> 
-        <property name="tipo_usuario" column="TIPO_USUARIO" />        
+        <property name="fecha_ultima_compra" column="FECHA_ULTIMA_COMPRA" />
+        <property name="tipo_usuario" column="TIPO_USUARIO" />
     </class>
 </hibernate-mapping>
