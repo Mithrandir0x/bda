@@ -61,7 +61,9 @@ public class UsuarioEditorWindow extends Window {
         left.addComponent(new Label("       LOGIN:"));
         left.addComponent(new Label("      NOMBRE:"));
         left.addComponent(new Label("    PASSWORD:"));
-        left.addComponent(new Label("TIPO USUARIO:"));
+        
+        if ( gestor != null )
+            left.addComponent(new Label("TIPO USUARIO:"));
 
 
         Panel right = new Panel(new Border.Invisible(), Panel.Orientation.VERTICAL);
@@ -70,25 +72,34 @@ public class UsuarioEditorWindow extends Window {
         passwordTextBox = new PasswordBox();
         passwordTextBox.setPreferredSize(new TerminalSize(32, 1));
         passwordTextBox.setText(usuario.getPassword());
-        tipo_usuarioButton = new Button(usuario.getTipo_usuario(), new Action() {
-
-            @Override
-            public void doAction()
-            {
-                Tipos tipo = ListSelectDialog.showDialog(ubticket.getGUIScreen(), "ATENCIÓN", "Seleccione la categoría:", Usuario.Tipos.values());
-                if ( tipo != null )
-                {
-                    usuario.setTipo_usuario(tipo.toString());
-                    tipo_usuarioButton.setText(usuario.getTipo_usuario());
-                }
-            }
-        
-        });
 
         right.addComponent(loginTextBox);
         right.addComponent(nombreTextBox);
         right.addComponent(passwordTextBox);
-        right.addComponent(tipo_usuarioButton);
+        
+        // Si esta ventana se está instanciando sin una instancia de GestorGenerico, significa
+        // que lo estamos instanciando desde la ventana de registro.
+        if ( gestor != null )
+        {
+            String tipo_usuarioButtonText = "Seleccione el tipo de usuario";
+            if ( usuario.getTipo_usuario() != null )
+                tipo_usuarioButtonText = usuario.getTipo_usuario();
+            tipo_usuarioButton = new Button(tipo_usuarioButtonText, new Action() {
+
+                @Override
+                public void doAction()
+                {
+                    Tipos tipo = ListSelectDialog.showDialog(ubticket.getGUIScreen(), "ATENCIÓN", "Seleccione la categoría:", Usuario.Tipos.values());
+                    if ( tipo != null )
+                    {
+                        usuario.setTipo_usuario(tipo.toString());
+                        tipo_usuarioButton.setText(usuario.getTipo_usuario());
+                    }
+                }
+
+            });
+            right.addComponent(tipo_usuarioButton);
+        }
 
         Panel editor = new Panel(new Border.Invisible(), Panel.Orientation.HORISONTAL);
         editor.addComponent(left);
@@ -106,6 +117,21 @@ public class UsuarioEditorWindow extends Window {
                     usuario.setPassword(passwordTextBox.getText());
                     if (usuario.getFecha_alta() == null) {
                         usuario.setFecha_alta(new Timestamp(new Date().getTime()));
+                    }
+                    
+                    // El único caso en que un tipo de usuario sea null es en el caso que
+                    // estemos creando un nuevo usuario.
+                    if ( usuario.getTipo_usuario() == null && gestor == null )
+                    {
+                        usuario.setTipo_usuario(Usuario.Tipos.CLIENTE.toString());
+                    }
+                    
+                    // En el caso que hayamos instanciado la ventana a través del gestor,
+                    // y no se haya seleccionado ningún tipo de usuario, se avisa.
+                    if ( usuario.getTipo_usuario() == null && gestor != null )
+                    {
+                        MessageBox.showMessageBox(ubticket.getGUIScreen(), "Atención", "Se ha de asignar un tipo de usuario.");
+                        return;
                     }
                     
                     List<Object> list = new HibernateTransaction<List<Object>>() {
@@ -136,7 +162,9 @@ public class UsuarioEditorWindow extends Window {
                             }
                         }.execute();
 
-                        gestor.actualizarTabla();
+                        if ( gestor != null )
+                            gestor.actualizarTabla();
+                        
                         ((Window) self).close();
                     }
                 } catch (Exception ex) {

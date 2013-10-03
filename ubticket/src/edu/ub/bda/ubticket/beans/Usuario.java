@@ -9,7 +9,7 @@ import java.sql.Timestamp;
  */
 public class Usuario {
     
-    public static enum Tipos { ADMINISTRADOR, USUARIO };
+    public static enum Tipos { ADMINISTRADOR, CLIENTE };
 
     private Integer id;
     private String login;

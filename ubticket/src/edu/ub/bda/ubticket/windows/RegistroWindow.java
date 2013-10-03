@@ -13,6 +13,7 @@ import com.googlecode.lanterna.gui.dialog.MessageBox;
 import edu.ub.bda.UBTicket;
 import edu.ub.bda.ubticket.beans.Usuario;
 import edu.ub.bda.ubticket.utils.AutenticacionServicio;
+import edu.ub.bda.ubticket.windows.gestioncontenidos.UsuarioEditorWindow;
 
 /**
  *
@@ -83,7 +84,7 @@ public class RegistroWindow extends Window
             @Override
             public void doAction()
             {
-            /////////////////////////////////////////////////////////////////
+                ubticket.getGUIScreen().showWindow(new UsuarioEditorWindow(ubticket, null));
             }
          }));
         
