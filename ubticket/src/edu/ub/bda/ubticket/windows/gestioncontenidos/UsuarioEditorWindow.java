@@ -8,10 +8,12 @@ import com.googlecode.lanterna.gui.component.Label;
 import com.googlecode.lanterna.gui.component.Panel;
 import com.googlecode.lanterna.gui.component.PasswordBox;
 import com.googlecode.lanterna.gui.component.TextBox;
+import com.googlecode.lanterna.gui.dialog.ListSelectDialog;
 import com.googlecode.lanterna.gui.dialog.MessageBox;
 import com.googlecode.lanterna.terminal.TerminalSize;
 import edu.ub.bda.UBTicket;
 import edu.ub.bda.ubticket.beans.Usuario;
+import edu.ub.bda.ubticket.beans.Usuario.Tipos;
 import edu.ub.bda.ubticket.utils.HibernateTransaction;
 import edu.ub.bda.ubticket.windows.GestorGenericoWindow;
 import java.sql.Timestamp;
@@ -31,7 +33,7 @@ public class UsuarioEditorWindow extends Window {
     private TextBox nombreTextBox;
     private TextBox loginTextBox;
     private PasswordBox passwordTextBox;
-    private TextBox tipo_usuarioTextBox;
+    private Button tipo_usuarioButton;
 
     public UsuarioEditorWindow(final UBTicket ubticket, GestorGenericoWindow gestor) {
 
@@ -68,12 +70,25 @@ public class UsuarioEditorWindow extends Window {
         passwordTextBox = new PasswordBox();
         passwordTextBox.setPreferredSize(new TerminalSize(32, 1));
         passwordTextBox.setText(usuario.getPassword());
-        tipo_usuarioTextBox = new TextBox(Usuario.getTipo_usuario().toString());
+        tipo_usuarioButton = new Button(usuario.getTipo_usuario(), new Action() {
+
+            @Override
+            public void doAction()
+            {
+                Tipos tipo = ListSelectDialog.showDialog(ubticket.getGUIScreen(), "ATENCIÓN", "Seleccione la categoría:", Usuario.Tipos.values());
+                if ( tipo != null )
+                {
+                    usuario.setTipo_usuario(tipo.toString());
+                    tipo_usuarioButton.setText(usuario.getTipo_usuario());
+                }
+            }
+        
+        });
 
         right.addComponent(loginTextBox);
         right.addComponent(nombreTextBox);
         right.addComponent(passwordTextBox);
-        right.addComponent(tipo_usuarioTextBox);
+        right.addComponent(tipo_usuarioButton);
 
         Panel editor = new Panel(new Border.Invisible(), Panel.Orientation.HORISONTAL);
         editor.addComponent(left);
@@ -92,7 +107,6 @@ public class UsuarioEditorWindow extends Window {
                     if (usuario.getFecha_alta() == null) {
                         usuario.setFecha_alta(new Timestamp(new Date().getTime()));
                     }
-                    Usuario.setTipo_usuario(Integer.parseInt(tipo_usuarioTextBox.getText()));
                     
                     List<Object> list = new HibernateTransaction<List<Object>>() {
                         @Override

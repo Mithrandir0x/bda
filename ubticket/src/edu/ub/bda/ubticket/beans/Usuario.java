@@ -8,13 +8,15 @@ import java.sql.Timestamp;
  * @author domenicocitera
  */
 public class Usuario {
+    
+    public static enum Tipos { ADMINISTRADOR, USUARIO };
 
     private Integer id;
     private String login;
     private String password;
     private String nombre;
     private Timestamp fecha_alta;
-    private static Integer tipo_usuario;
+    private String tipo_usuario;
 
     public Usuario() {
         login = "";
@@ -96,14 +98,14 @@ public class Usuario {
     /**
      * @return the tipo_usuario
      */
-    public static Integer getTipo_usuario() {
+    public String getTipo_usuario() {
         return tipo_usuario;
     }
 
     /**
      * @param aTipo_usuario the tipo_usuario to set
      */
-    public static void setTipo_usuario(Integer aTipo_usuario) {
+    public void setTipo_usuario(String aTipo_usuario) {
         tipo_usuario = aTipo_usuario;
     }
 

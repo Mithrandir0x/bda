@@ -296,7 +296,7 @@ public class GestorGenericoWindow extends Window
                             new Label(o.getLogin()),
                             new Label(o.getNombre()),
                             new Label(o.getFecha_alta().toString()),
-                            new Label(Usuario.getTipo_usuario().toString()));
+                            new Label(o.getTipo_usuario()));
 
                 }
             }

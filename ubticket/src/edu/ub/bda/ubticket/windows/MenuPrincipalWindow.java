@@ -3,9 +3,9 @@ package edu.ub.bda.ubticket.windows;
 import com.googlecode.lanterna.gui.Action;
 import com.googlecode.lanterna.gui.Window;
 import com.googlecode.lanterna.gui.component.Button;
-import com.googlecode.lanterna.gui.dialog.MessageBox;
 import edu.ub.bda.UBTicket;
 import edu.ub.bda.ubticket.beans.Usuario;
+import edu.ub.bda.ubticket.utils.AutenticacionServicio;
 
 /**
  *
@@ -14,23 +14,23 @@ import edu.ub.bda.ubticket.beans.Usuario;
 public class MenuPrincipalWindow extends Window
 {
     
+    private Button gestionarContenidosButton;
+    
     public MenuPrincipalWindow(final UBTicket ubticket)
     {
         super("Menú principal");
         
         this.setSoloWindow(true);
-            addComponent(new Button("1. Gestionar contenidos", new Action() {
 
-                @Override
-                public void doAction()
-                {  
-                    if (Usuario.getTipo_usuario()<=20) ////?????
-                        ubticket.gestionarContenidos();
-                    else
-                         MessageBox.showMessageBox(ubticket.getGUIScreen(), "Atención", "Sólo los administradores.");
-                }
-            }));
-        
+        gestionarContenidosButton = new Button("1. Gestionar contenidos", new Action() {
+
+            @Override
+            public void doAction()
+            {
+                ubticket.gestionarContenidos();
+            }
+        });
+        addComponent(gestionarContenidosButton);
         
         addComponent(new Button("2. Comprar entradas", new Action() {
 
@@ -71,6 +71,13 @@ public class MenuPrincipalWindow extends Window
             }
         
         }));
+    }
+        
+    @Override
+    public void onVisible()
+    {
+        Usuario usuario = AutenticacionServicio.GetUsuario();
+        gestionarContenidosButton.setVisible(usuario.getTipo_usuario().equals(Usuario.Tipos.ADMINISTRADOR.toString()));
     }
     
 }
