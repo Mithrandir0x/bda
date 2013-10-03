@@ -8,6 +8,7 @@ import com.googlecode.lanterna.gui.component.Label;
 import com.googlecode.lanterna.gui.component.Panel;
 import com.googlecode.lanterna.gui.component.TextBox;
 import com.googlecode.lanterna.gui.dialog.ListSelectDialog;
+import com.googlecode.lanterna.gui.dialog.MessageBox;
 import edu.ub.bda.UBTicket;
 import edu.ub.bda.ubticket.beans.Categoria;
 import edu.ub.bda.ubticket.beans.Espectaculo;
@@ -114,6 +115,12 @@ public class EspectaculoEditorWindow extends Window
             {
                 espectaculo.setTitulo(tituloTextBox.getText());
                 espectaculo.setDescripcion(descripcionTextArea.getText());
+                
+                if ( espectaculo.getCategoria() == null )
+                {
+                        MessageBox.showMessageBox(ubticket.getGUIScreen(), "Atención", "Se ha de asignar una categoría de espectáculo.");
+                        return;
+                }
                 
                 new HibernateTransaction<Object>() {
 
