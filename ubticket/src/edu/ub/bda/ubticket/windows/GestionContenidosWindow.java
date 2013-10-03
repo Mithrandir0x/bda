@@ -61,6 +61,7 @@ public class GestionContenidosWindow extends Window
         
         }));
         
+        
         addComponent(new Button("Salir", new Action() {
 
             @Override
@@ -68,7 +69,6 @@ public class GestionContenidosWindow extends Window
             {
                 ((Window) self).close();
             }
-        
         }));
     }
     

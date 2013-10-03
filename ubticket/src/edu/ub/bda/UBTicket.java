@@ -10,6 +10,7 @@ import edu.ub.bda.ubticket.windows.GestionContenidosWindow;
 import edu.ub.bda.ubticket.windows.GestorEntradasWindow;
 import edu.ub.bda.ubticket.windows.MenuPrincipalWindow;
 import edu.ub.bda.ubticket.windows.RegistroWindow;
+import edu.ub.bda.ubticket.windows.VendidasViewWindow;
 import java.nio.charset.Charset;
 
 /**
@@ -30,6 +31,7 @@ public class UBTicket
     private GestionContenidosWindow gestionContenidosWindow;
     private ComprarEntradasWindow comprarEntradasWindow;
     private GestorEntradasWindow gestorEntradasWindow;
+    private VendidasViewWindow vendidasViewWindow;
     
     public UBTicket(boolean activarAutenticacion)
     {
@@ -70,6 +72,7 @@ public class UBTicket
          gestionContenidosWindow = new GestionContenidosWindow(this);
          comprarEntradasWindow = new ComprarEntradasWindow(this);
          gestorEntradasWindow = new GestorEntradasWindow();
+         vendidasViewWindow= new VendidasViewWindow();
     }
     
     public void iniciarSesion()
@@ -92,6 +95,11 @@ public class UBTicket
     public void gestionarEntradas()
     {
         gui.showWindow(gestorEntradasWindow, GUIScreen.Position.CENTER);
+    }
+    
+    public void gestionarVendidas()
+    {
+        gui.showWindow(vendidasViewWindow, GUIScreen.Position.CENTER);
     }
     
     public void cerrarSesion()

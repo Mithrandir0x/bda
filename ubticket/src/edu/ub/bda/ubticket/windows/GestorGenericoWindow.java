@@ -107,7 +107,6 @@ public class GestorGenericoWindow extends Window
                {
                     ubticket.getGUIScreen().showWindow(new UsuarioEditorWindow(ubticket, (GestorGenericoWindow) self));
                 }
-        
             }
         }));
         

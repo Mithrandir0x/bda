@@ -13,6 +13,7 @@ public class Sesion {
     private Timestamp fecha_inicio;
     private Timestamp fecha_finalizacion;
     private Integer precio;
+    private Integer entradas_vendidas;
     private Espectaculo espectaculo;
     private Espacio espacio;
 
@@ -101,6 +102,20 @@ public class Sesion {
      */
     public void setPrecio(Integer precio) {
         this.precio = precio;
+    }
+
+    /**
+     * @return the endtradas_vendidas
+     */
+    public Integer getEntradas_vendidas() {
+        return entradas_vendidas;
+    }
+
+    /**
+     * @param endtradas_vendidas the endtradas_vendidas to set
+     */
+    public void setEntradas_vendidas(Integer entradas_vendidas) {
+        this.entradas_vendidas = entradas_vendidas;
     }
 
 }

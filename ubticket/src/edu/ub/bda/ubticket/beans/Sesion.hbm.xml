@@ -8,6 +8,7 @@
         <property name="fecha_inicio" column="FECHA_INICIO" />
         <property name="fecha_finalizacion" column="FECHA_FINALIZACION" />
         <property name="precio" column="PRECIO" />
+        <property name="entradas_vendidas" column="ENTRADAS_VENDIDAS" />
         <many-to-one name="espectaculo" class="edu.ub.bda.ubticket.beans.Espectaculo" fetch="select">
             <column name="ESPECTACULO_ID" /> <!-- CAMP FK --> 
         </many-to-one>

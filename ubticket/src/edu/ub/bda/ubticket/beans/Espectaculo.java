@@ -76,4 +76,11 @@ public class Espectaculo
         this.categoria = categoria;
     }
     
+        @Override
+    public String toString()
+    {
+        return "" + titulo;
+    }
+    
+    
 }

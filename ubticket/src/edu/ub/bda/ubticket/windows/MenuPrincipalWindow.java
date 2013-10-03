@@ -15,6 +15,7 @@ public class MenuPrincipalWindow extends Window
 {
     
     private Button gestionarContenidosButton;
+    private Button vendidasViewWindowButton;
     
     public MenuPrincipalWindow(final UBTicket ubticket)
     {
@@ -30,7 +31,20 @@ public class MenuPrincipalWindow extends Window
                 ubticket.gestionarContenidos();
             }
         });
+        
         addComponent(gestionarContenidosButton);
+        
+           vendidasViewWindowButton = new Button("1.1. Vendite", new Action() {
+
+            @Override
+            public void doAction()
+            {
+                ubticket.gestionarVendidas();
+            }
+        
+        });
+        
+        addComponent(vendidasViewWindowButton);
         
         addComponent(new Button("2. Comprar entradas", new Action() {
 
@@ -52,6 +66,7 @@ public class MenuPrincipalWindow extends Window
         
         }));
         
+     
         addComponent(new Button("3. Cerrar sesión", new Action() {
 
             @Override
@@ -78,6 +93,8 @@ public class MenuPrincipalWindow extends Window
     {
         Usuario usuario = AutenticacionServicio.GetUsuario();
         gestionarContenidosButton.setVisible(usuario.getTipo_usuario().equals(Usuario.Tipos.ADMINISTRADOR.toString()));
+        vendidasViewWindowButton.setVisible(usuario.getTipo_usuario().equals(Usuario.Tipos.ADMINISTRADOR.toString()));
     }
+    
     
 }
