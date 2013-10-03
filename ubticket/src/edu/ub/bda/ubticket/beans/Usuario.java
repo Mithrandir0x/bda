@@ -14,11 +14,13 @@ public class Usuario {
     private String password;
     private String nombre;
     private Timestamp fecha_alta;
+    private static Integer tipo_usuario;
 
     public Usuario() {
         login = "";
         password = "";
         nombre = "";
+       
     }
 
     /**
@@ -89,6 +91,20 @@ public class Usuario {
      */
     public void setFecha_alta(Timestamp fecha_alta) {
         this.fecha_alta = fecha_alta;
+    }
+
+    /**
+     * @return the tipo_usuario
+     */
+    public static Integer getTipo_usuario() {
+        return tipo_usuario;
+    }
+
+    /**
+     * @param aTipo_usuario the tipo_usuario to set
+     */
+    public static void setTipo_usuario(Integer aTipo_usuario) {
+        tipo_usuario = aTipo_usuario;
     }
 
 }

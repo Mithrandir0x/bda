@@ -8,6 +8,7 @@
         <property name="login" column="LOGIN" />
         <property name="password" column="PASSWORD" />  
         <property name="nombre" column="NOMBRE" />
-        <property name="fecha_alta" column="FECHA_ALTA" />         
+        <property name="fecha_alta" column="FECHA_ALTA" /> 
+        <property name="tipo_usuario" column="TIPO_USUARIO" />        
     </class>
 </hibernate-mapping>

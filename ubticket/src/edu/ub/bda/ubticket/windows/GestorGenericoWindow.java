@@ -295,7 +295,8 @@ public class GestorGenericoWindow extends Window
                     tabla.addRow(new Label(o.getId().toString()),
                             new Label(o.getLogin()),
                             new Label(o.getNombre()),
-                            new Label(o.getFecha_alta().toString()));
+                            new Label(o.getFecha_alta().toString()),
+                            new Label(Usuario.getTipo_usuario().toString()));
 
                 }
             }

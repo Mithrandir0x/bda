@@ -78,6 +78,15 @@ public class RegistroWindow extends Window
         
         }));
         
+        left.addComponent(new Button("AGREGAR", new Action() {
+
+            @Override
+            public void doAction()
+            {
+            /////////////////////////////////////////////////////////////////
+            }
+         }));
+        
         p.addComponent(left);
         p.addComponent(right);
         addComponent(p);

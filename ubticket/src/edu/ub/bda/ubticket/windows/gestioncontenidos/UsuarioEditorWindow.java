@@ -31,6 +31,7 @@ public class UsuarioEditorWindow extends Window {
     private TextBox nombreTextBox;
     private TextBox loginTextBox;
     private PasswordBox passwordTextBox;
+    private TextBox tipo_usuarioTextBox;
 
     public UsuarioEditorWindow(final UBTicket ubticket, GestorGenericoWindow gestor) {
 
@@ -55,9 +56,10 @@ public class UsuarioEditorWindow extends Window {
 
 
         Panel left = new Panel(new Border.Invisible(), Panel.Orientation.VERTICAL);
-        left.addComponent(new Label("     LOGIN:"));
-        left.addComponent(new Label("    NOMBRE:"));
-        left.addComponent(new Label("  PASSWORD:"));
+        left.addComponent(new Label("       LOGIN:"));
+        left.addComponent(new Label("      NOMBRE:"));
+        left.addComponent(new Label("    PASSWORD:"));
+        left.addComponent(new Label("TIPO USUARIO:"));
 
 
         Panel right = new Panel(new Border.Invisible(), Panel.Orientation.VERTICAL);
@@ -66,10 +68,12 @@ public class UsuarioEditorWindow extends Window {
         passwordTextBox = new PasswordBox();
         passwordTextBox.setPreferredSize(new TerminalSize(32, 1));
         passwordTextBox.setText(usuario.getPassword());
+        tipo_usuarioTextBox = new TextBox(Usuario.getTipo_usuario().toString());
 
         right.addComponent(loginTextBox);
         right.addComponent(nombreTextBox);
         right.addComponent(passwordTextBox);
+        right.addComponent(tipo_usuarioTextBox);
 
         Panel editor = new Panel(new Border.Invisible(), Panel.Orientation.HORISONTAL);
         editor.addComponent(left);
@@ -88,6 +92,7 @@ public class UsuarioEditorWindow extends Window {
                     if (usuario.getFecha_alta() == null) {
                         usuario.setFecha_alta(new Timestamp(new Date().getTime()));
                     }
+                    Usuario.setTipo_usuario(Integer.parseInt(tipo_usuarioTextBox.getText()));
                     
                     List<Object> list = new HibernateTransaction<List<Object>>() {
                         @Override
