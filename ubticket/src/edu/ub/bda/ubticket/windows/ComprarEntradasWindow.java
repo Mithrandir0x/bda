@@ -14,6 +14,7 @@ import edu.ub.bda.ubticket.beans.Entrada;
 import edu.ub.bda.ubticket.beans.Espacio;
 import edu.ub.bda.ubticket.beans.Espectaculo;
 import edu.ub.bda.ubticket.beans.Sesion;
+import edu.ub.bda.ubticket.beans.Usuario;
 import edu.ub.bda.ubticket.utils.AutenticacionServicio;
 import edu.ub.bda.ubticket.utils.HibernateTransaction;
 import java.util.List;
@@ -35,6 +36,7 @@ public class ComprarEntradasWindow extends Window
     private Table tabla;
     private Label paginaEtiqueta;
     private Panel paginadorPanel;
+    private Usuario usuario;
     
     /* private final TextBox dia;
     private final TextBox mes;
@@ -242,33 +244,53 @@ public class ComprarEntradasWindow extends Window
         private Sesion sesion;
         private UBTicket ubticket;
         
+        
         public ComprarEntradaAction(UBTicket ubticket, Sesion sesion)
         {
             this.sesion = sesion;
             this.ubticket = ubticket;
+            
+            usuario = AutenticacionServicio.GetUsuario();
         }
 
         @Override
         public void doAction()
         {
-            new HibernateTransaction() {
-
-                @Override
-                public Object run()
-                {
-                    Entrada entrada = new Entrada();
-                    entrada.setSesion(sesion);
-                    entrada.setUsuario(AutenticacionServicio.GetUsuario());
-                    
-                    session.saveOrUpdate(entrada);
-                    
-                    return null;
-                }
-            }.execute();
             
-            MessageBox.showMessageBox(ubticket.getGUIScreen(), "ATENCIÓN", "Ha comprado una entrada de '" + sesion.getEspectaculo().getTitulo() + "'.");
-        }
+            Integer numEnt = new HibernateTransaction<Integer>() {
+
+            @Override
+            public Integer run()
+            {
+                Query query = session.createSQLQuery("SELECT COUNT(*) FROM ENTRADA  WHERE (USUARIO_ID=:usuario_id) & (SESION_ID = :sesion_id)");
+                query.setInteger("sesion_id", sesion.getId());
+                query.setInteger("usuario_id", usuario.getId());
+                return (Integer) query.list().get(0);
+            }
         
+        }.execute();
+            
+            if(numEnt<6) {
+                new HibernateTransaction() {
+
+                    @Override
+                    public Object run()
+                    {
+                        Entrada entrada = new Entrada();
+                        entrada.setSesion(sesion);
+                        entrada.setUsuario(AutenticacionServicio.GetUsuario());
+
+                        session.saveOrUpdate(entrada);
+
+                        return null;
+                    }
+                }.execute();
+
+                MessageBox.showMessageBox(ubticket.getGUIScreen(), "ATENCIÓN", "Ha comprado una entrada de '" + sesion.getEspectaculo().getTitulo() + "'.");
+            }
+         else
+            MessageBox.showMessageBox(ubticket.getGUIScreen(), "ATENCIÓN", "Se puede comprar sólo seis entradas para el espectáculo en la misma sesión!");
+      }
     }
     
 }
