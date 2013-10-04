@@ -21,7 +21,7 @@ public class GestionContenidosWindow extends Window
         super("Gestionar contenidos");
         final Object self = this;
         
-        addComponent(new Button("1. Categorías", new Action() {
+        addComponent(new Button("Categorías", new Action() {
 
             @Override
             public void doAction()
@@ -31,7 +31,7 @@ public class GestionContenidosWindow extends Window
         
         }));
         
-        addComponent(new Button("2. Espectáculos", new Action() {
+        addComponent(new Button("Espectáculos", new Action() {
 
             @Override
             public void doAction()
@@ -41,7 +41,7 @@ public class GestionContenidosWindow extends Window
         
         }));
         
-        addComponent(new Button("3. Espacios", new Action() {
+        addComponent(new Button("Espacios", new Action() {
 
             @Override
             public void doAction()
@@ -51,7 +51,7 @@ public class GestionContenidosWindow extends Window
         
         }));
         
-        addComponent(new Button("4. Usuarios", new Action() {
+        addComponent(new Button("Usuarios", new Action() {
 
             @Override
             public void doAction()
@@ -60,8 +60,7 @@ public class GestionContenidosWindow extends Window
             }
         
         }));
-        
-        
+              
         addComponent(new Button("Salir", new Action() {
 
             @Override

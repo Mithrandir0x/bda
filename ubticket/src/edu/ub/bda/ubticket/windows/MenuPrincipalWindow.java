@@ -11,90 +11,67 @@ import edu.ub.bda.ubticket.utils.AutenticacionServicio;
  *
  * @author olopezsa13
  */
-public class MenuPrincipalWindow extends Window
-{
-    
+public class MenuPrincipalWindow extends Window {
+
     private Button gestionarContenidosButton;
     private Button vendidasViewWindowButton;
-    
-    public MenuPrincipalWindow(final UBTicket ubticket)
-    {
+
+    public MenuPrincipalWindow(final UBTicket ubticket) {
         super("Menú principal");
-        
+
         this.setSoloWindow(true);
 
-        gestionarContenidosButton = new Button("1. Gestionar contenidos", new Action() {
-
+        addComponent(new Button("Comprar entradas", new Action() {
             @Override
-            public void doAction()
-            {
+            public void doAction() {
+                ubticket.comprarEntradas();
+            }
+        }));
+
+        addComponent(new Button("Ver entradas compradas", new Action() {
+            @Override
+            public void doAction() {
+                ubticket.gestionarEntradas();
+            }
+        }));
+
+        addComponent(new Button("Cerrar sesión", new Action() {
+            @Override
+            public void doAction() {
+                ubticket.cerrarSesion();
+            }
+        }));
+
+        gestionarContenidosButton = new Button("Gestionar contenidos", new Action() {
+            @Override
+            public void doAction() {
                 ubticket.gestionarContenidos();
             }
         });
-        
-        addComponent(gestionarContenidosButton);
-        
-           vendidasViewWindowButton = new Button("1.1. Vendite", new Action() {
 
+        addComponent(gestionarContenidosButton);
+
+        vendidasViewWindowButton = new Button("Control de Ventas", new Action() {
             @Override
-            public void doAction()
-            {
+            public void doAction() {
                 ubticket.gestionarVendidas();
             }
-        
         });
-        
+
         addComponent(vendidasViewWindowButton);
-        
-        addComponent(new Button("2. Comprar entradas", new Action() {
 
+        addComponent(new Button("Salir", new Action() {
             @Override
-            public void doAction()
-            {
-                ubticket.comprarEntradas();
-            }
-        
-        }));
-        
-        addComponent(new Button("  2.1. Ver entradas compradas", new Action() {
-
-            @Override
-            public void doAction()
-            {
-                ubticket.gestionarEntradas();
-            }
-        
-        }));
-        
-     
-        addComponent(new Button("3. Cerrar sesión", new Action() {
-
-            @Override
-            public void doAction()
-            {
-                ubticket.cerrarSesion();
-            }
-        
-        }));
-        
-        addComponent(new Button("4. Salir", new Action() {
-
-            @Override
-            public void doAction()
-            {
+            public void doAction() {
                 ubticket.cerrar();
             }
-        
         }));
     }
-        
+
     @Override
-    public void onVisible()
-    {
+    public void onVisible() {
         Usuario usuario = AutenticacionServicio.GetUsuario();
         gestionarContenidosButton.setVisible(usuario.getTipo_usuario().equals(Usuario.Tipos.ADMINISTRADOR.toString()));
         vendidasViewWindowButton.setVisible(usuario.getTipo_usuario().equals(Usuario.Tipos.ADMINISTRADOR.toString()));
     }
-    
-    
 }

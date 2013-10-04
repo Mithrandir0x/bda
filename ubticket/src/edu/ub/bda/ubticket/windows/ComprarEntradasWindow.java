@@ -7,7 +7,6 @@ import com.googlecode.lanterna.gui.component.Button;
 import com.googlecode.lanterna.gui.component.Label;
 import com.googlecode.lanterna.gui.component.Panel;
 import com.googlecode.lanterna.gui.component.Table;
-import com.googlecode.lanterna.gui.component.TextBox;
 import com.googlecode.lanterna.gui.dialog.ListSelectDialog;
 import com.googlecode.lanterna.gui.dialog.MessageBox;
 import edu.ub.bda.UBTicket;
@@ -17,7 +16,6 @@ import edu.ub.bda.ubticket.beans.Espectaculo;
 import edu.ub.bda.ubticket.beans.Sesion;
 import edu.ub.bda.ubticket.utils.AutenticacionServicio;
 import edu.ub.bda.ubticket.utils.HibernateTransaction;
-import java.util.Calendar;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -92,7 +90,7 @@ public class ComprarEntradasWindow extends Window
         espacioPanel.addComponent(seleccionarEspacioButton);
         addComponent(espacioPanel);
         
-        Calendar calendar = Calendar.getInstance();        
+        //Calendar calendar = Calendar.getInstance();        
         
         /* Panel diasPanel = new Panel(new Border.Invisible(), Panel.Orientation.HORISONTAL);
         diasPanel.addComponent(new Label(" DIA: "));

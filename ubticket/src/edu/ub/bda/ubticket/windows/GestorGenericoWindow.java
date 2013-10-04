@@ -291,11 +291,22 @@ public class GestorGenericoWindow extends Window
                 else if ( objeto instanceof Usuario )
                 {
                     Usuario o = (Usuario) objeto;
-                    tabla.addRow(new Label(o.getId().toString()),
+                    
+                    if(o.getFecha_ultima_compra()!=null){
+                         tabla.addRow(new Label(o.getId().toString()),
+                            new Label(o.getLogin()),
+                            new Label(o.getNombre()),
+                            new Label(o.getFecha_alta().toString()),
+                            new Label(o.getTipo_usuario()),
+                            new Label(o.getFecha_ultima_compra().toString()));
+                    }
+                    else {
+                         tabla.addRow(new Label(o.getId().toString()),
                             new Label(o.getLogin()),
                             new Label(o.getNombre()),
                             new Label(o.getFecha_alta().toString()),
                             new Label(o.getTipo_usuario()));
+                    }
 
                 }
             }

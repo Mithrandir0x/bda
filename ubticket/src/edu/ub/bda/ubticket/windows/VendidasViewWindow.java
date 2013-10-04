@@ -14,166 +14,131 @@ import edu.ub.bda.ubticket.utils.HibernateTransaction;
 import java.util.List;
 import org.hibernate.Query;
 
-
 /**
  *
  * @author domenicocitera
  */
-public class VendidasViewWindow extends Window
-{
-    
+public class VendidasViewWindow extends Window {
+
     private Usuario usuario;
-    
     private Panel todoPanel;
     private Panel tablaPanel;
     private Table tabla;
     private Label paginaEtiqueta;
-    
     private Integer maxFilas = 15;
     private Integer pagina = 0;
     private Integer maxPaginas = 0;
-    
-    public VendidasViewWindow()
-    {
+
+    public VendidasViewWindow() {
         super("Ver las ventas");
-        
+
         todoPanel = new Panel(new Border.Invisible(), Panel.Orientation.VERTICAL);
         todoPanel.setVisible(false);
-        
-        tablaPanel = new Panel(new Border.Invisible(), Panel.Orientation.HORISONTAL);
-        
-        Panel paginadorPanel = new Panel(new Border.Invisible(), Panel.Orientation.HORISONTAL);
-        
-        paginadorPanel.addComponent(new Button("<--", new Action() {
 
+        tablaPanel = new Panel(new Border.Invisible(), Panel.Orientation.HORISONTAL);
+
+        Panel paginadorPanel = new Panel(new Border.Invisible(), Panel.Orientation.HORISONTAL);
+
+        paginadorPanel.addComponent(new Button("<--", new Action() {
             @Override
-            public void doAction()
-            {
-                if ( pagina > 0 )
-                {
+            public void doAction() {
+                if (pagina > 0) {
                     pagina--;
                     actualizarTabla();
                 }
             }
-        
         }));
-        
+
         paginaEtiqueta = new Label();
         paginaEtiqueta.setText(getTextoPagina());
         paginadorPanel.addComponent(paginaEtiqueta);
-        
-        paginadorPanel.addComponent(new Button("-->", new Action() {
 
+        paginadorPanel.addComponent(new Button("-->", new Action() {
             @Override
-            public void doAction()
-            {
-                if ( ( pagina + 1 ) < maxPaginas )
-                {
+            public void doAction() {
+                if ((pagina + 1) < maxPaginas) {
                     pagina++;
                     actualizarTabla();
                 }
             }
-        
         }));
-        
+
         todoPanel.addComponent(tablaPanel);
         todoPanel.addComponent(paginadorPanel);
         addComponent(todoPanel);
-        
-        addComponent(new Button("Salir", new Action() {
 
+        addComponent(new Button("Salir", new Action() {
             @Override
-            public void doAction()
-            {
+            public void doAction() {
                 todoPanel.setVisible(false);
-                
-                if ( tabla != null )
-                {
+
+                if (tabla != null) {
                     tabla.removeAllRows();
                 }
-                
+
                 close();
             }
-        
         }));
     }
-    
+
     @Override
-    public void onVisible()
-    {
+    public void onVisible() {
         usuario = AutenticacionServicio.GetUsuario();
         actualizarTabla();
     }
-    
-    private void actualizarTabla()
-    {
-        actualizarPagina();
-                
-        List<Sesion> list = new HibernateTransaction<List<Sesion>>() {
 
+    private void actualizarTabla() {
+        actualizarPagina();
+
+        List<Sesion> list = new HibernateTransaction<List<Sesion>>() {
             @Override
-            public List<Sesion> run()
-            {
+            public List<Sesion> run() {
                 Query query = session.createQuery("from Sesion");
                 query.setFirstResult(pagina * maxFilas);
                 query.setMaxResults(maxFilas);
                 return (List<Sesion>) query.list();
             }
-        
         }.execute();
-        
-        if ( list != null && list.size() > 0 )
-        {
+
+        if (list != null && list.size() > 0) {
             boolean addComponent = false;
-            if ( tabla == null )
-            {
+            if (tabla == null) {
                 tabla = new Table(5, "Ventas");
                 addComponent = true;
-            }
-            else
-            {
+            } else {
                 tabla.removeAllRows();
             }
-            
-            for ( Sesion s : list )
-            {
+
+            for (Sesion s : list) {
                 tabla.addRow(new Label(s.getId().toString()),
                         new Label(s.getEspectaculo().toString()),
                         new Label(s.getEspacio().toString()),
                         new Label(s.getFecha_inicio().toString()),
                         new Label(s.getEntradas_vendidas().toString()));
             }
-        
-            if ( addComponent )
-            {
+
+            if (addComponent) {
                 tablaPanel.addComponent(tabla);
             }
             todoPanel.setVisible(true);
         }
     }
-    
-    private String getTextoPagina()
-    {
+
+    private String getTextoPagina() {
         Integer pag = pagina + 1;
         return pag.toString() + " / " + maxPaginas.toString();
     }
-    
-    private void actualizarPagina()
-    {
-        Integer numFilas = new HibernateTransaction<Integer>() {
 
+    private void actualizarPagina() {
+        Integer numFilas = new HibernateTransaction<Integer>() {
             @Override
-            public Integer run()
-            {
+            public Integer run() {
                 Query query = session.createSQLQuery("SELECT COUNT(*) FROM SESION");
-                
                 return (Integer) query.list().get(0);
             }
-        
         }.execute();
         Double maxPaginasFP = numFilas.doubleValue() / maxFilas.doubleValue();
         maxPaginas = (int) Math.ceil(maxPaginasFP.doubleValue());
         paginaEtiqueta.setText(getTextoPagina());
     }
-    
 }
