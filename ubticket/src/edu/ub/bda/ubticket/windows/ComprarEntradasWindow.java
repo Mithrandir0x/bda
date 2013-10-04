@@ -37,6 +37,7 @@ public class ComprarEntradasWindow extends Window
     private Label paginaEtiqueta;
     private Panel paginadorPanel;
     private Usuario usuario;
+    private static final int IVA=20;
     
     /* private final TextBox dia;
     private final TextBox mes;
@@ -204,7 +205,7 @@ public class ComprarEntradasWindow extends Window
                 tabla.addRow(new Label(o.getTitulo()),
                         new Label(o.getCategoria().getNombre()),
                         new Label(sesion.getFecha_inicio().toString()),
-                        new Button("Comprar por " + sesion.getPrecio().toString() + "€", new ComprarEntradaAction(ubticket, sesion)));
+                        new Button("Comprar por " + sesion.getPrecio().toString() + "€/"+sesion.getPrecio()*(IVA+100)/100+" IVA inc.", new ComprarEntradaAction(ubticket, sesion)));
             }
         
             if ( addComponent )
@@ -287,6 +288,7 @@ public class ComprarEntradasWindow extends Window
                 }.execute();
 
                 MessageBox.showMessageBox(ubticket.getGUIScreen(), "ATENCIÓN", "Ha comprado una entrada de '" + sesion.getEspectaculo().getTitulo() + "'.");
+        
             }
          else
             MessageBox.showMessageBox(ubticket.getGUIScreen(), "ATENCIÓN", "Se puede comprar sólo seis entradas para el espectáculo en la misma sesión!");
