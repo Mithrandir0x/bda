@@ -1,9 +1,11 @@
 package edu.ub.bda.ubticket.beans;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Esta clase define l'usuario
+ * Esta clase define el usuario.
  *
  * @author domenicocitera
  */
@@ -18,6 +20,8 @@ public class Usuario {
     private Timestamp fecha_alta;
     private Timestamp fecha_ultima_compra;
     private String tipo_usuario;
+    
+    private Map<String, Object> metadatos = new HashMap<>();
 
     public Usuario() {
         login = "";
@@ -122,6 +126,31 @@ public class Usuario {
      */
     public void setFecha_ultima_compra(Timestamp fecha_ultima_compra) {
         this.fecha_ultima_compra = fecha_ultima_compra;
+    }
+    
+    /**
+     * 
+     * @param clave
+     * @return 
+     */
+    public Object Sesion(String clave)
+    {
+        return metadatos.get(clave);
+    }
+    
+    /**
+     * 
+     * @param clave
+     * @param valor 
+     */
+    public void Sesion(String clave, Object valor)
+    {
+        metadatos.put(clave, valor);
+    }
+    
+    public void vaciarDatosSesion()
+    {
+        metadatos.clear();
     }
 
 }

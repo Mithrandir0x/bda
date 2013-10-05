@@ -165,37 +165,6 @@ public class GestorEntradasWindow extends Window
         }
     }
     
-    private class BorrarEntradaAction implements Action
-    {
-        
-        private GestorEntradasWindow gestor;
-        private Entrada entrada;
-        
-        public BorrarEntradaAction(GestorEntradasWindow gestor, Entrada entrada)
-        {
-            this.gestor = gestor;
-            this.entrada = entrada;
-        }
-
-        @Override
-        public void doAction()
-        {
-            new HibernateTransaction() {
-
-                @Override
-                public Object run()
-                {
-                    session.delete(entrada);
-                    return null;
-                }
-            
-            }.execute();
-            
-            gestor.actualizarTabla();
-        }
-        
-    }
-    
     private String getTextoPagina()
     {
         Integer pag = pagina + 1;
@@ -222,6 +191,43 @@ public class GestorEntradasWindow extends Window
         Double maxPaginasFP = numFilas.doubleValue() / maxFilas.doubleValue();
         maxPaginas = (int) Math.ceil(maxPaginasFP.doubleValue());
         paginaEtiqueta.setText(getTextoPagina());
+    }
+    
+    private class BorrarEntradaAction implements Action
+    {
+        
+        private GestorEntradasWindow gestor;
+        private Entrada entrada;
+        private Usuario usuario;
+        
+        public BorrarEntradaAction(GestorEntradasWindow gestor, Entrada entrada)
+        {
+            this.gestor = gestor;
+            this.entrada = entrada;
+            usuario = AutenticacionServicio.GetUsuario();
+        }
+
+        @Override
+        public void doAction()
+        {
+            Integer numEntradas = (Integer) usuario.Sesion("ENTRADAS_SESION_" + entrada.getSesion().getId());
+            numEntradas--;
+            usuario.Sesion("ENTRADAS_SESION_" + entrada.getSesion().getId(), numEntradas);
+            
+            new HibernateTransaction() {
+
+                @Override
+                public Object run()
+                {
+                    session.delete(entrada);
+                    return null;
+                }
+            
+            }.execute();
+            
+            gestor.actualizarTabla();
+        }
+        
     }
     
 }

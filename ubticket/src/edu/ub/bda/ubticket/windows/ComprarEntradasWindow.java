@@ -39,6 +39,8 @@ public class ComprarEntradasWindow extends Window
     private Usuario usuario;
     private static final int IVA=20;
     
+    private int maxEntradasComprables = 6;
+    
     /* private final TextBox dia;
     private final TextBox mes;
     private final TextBox anyo;
@@ -244,7 +246,7 @@ public class ComprarEntradasWindow extends Window
         
         private Sesion sesion;
         private UBTicket ubticket;
-        
+        private Usuario usuario;
         
         public ComprarEntradaAction(UBTicket ubticket, Sesion sesion)
         {
@@ -257,21 +259,13 @@ public class ComprarEntradasWindow extends Window
         @Override
         public void doAction()
         {
-            
-            Integer numEnt = new HibernateTransaction<Integer>() {
-
-            @Override
-            public Integer run()
+            Integer numEntradas = (Integer) usuario.Sesion("ENTRADAS_SESION_" + sesion.getId());
+            if ( numEntradas == null )
             {
-                Query query = session.createSQLQuery("SELECT COUNT(*) FROM ENTRADA  WHERE (USUARIO_ID=:usuario_id) & (SESION_ID = :sesion_id)");
-                query.setInteger("sesion_id", sesion.getId());
-                query.setInteger("usuario_id", usuario.getId());
-                return (Integer) query.list().get(0);
+                numEntradas = 0;
             }
-        
-        }.execute();
             
-            if(numEnt<6) {
+            if ( numEntradas < maxEntradasComprables ) {
                 new HibernateTransaction() {
 
                     @Override
@@ -279,20 +273,23 @@ public class ComprarEntradasWindow extends Window
                     {
                         Entrada entrada = new Entrada();
                         entrada.setSesion(sesion);
-                        entrada.setUsuario(AutenticacionServicio.GetUsuario());
+                        entrada.setUsuario(usuario);
 
                         session.saveOrUpdate(entrada);
 
                         return null;
                     }
                 }.execute();
+                
+                numEntradas++;
+                usuario.Sesion("ENTRADAS_SESION_" + sesion.getId(), numEntradas);
 
                 MessageBox.showMessageBox(ubticket.getGUIScreen(), "ATENCIÓN", "Ha comprado una entrada de '" + sesion.getEspectaculo().getTitulo() + "'.");
-        
+            } else {
+                MessageBox.showMessageBox(ubticket.getGUIScreen(), "ATENCIÓN", "Se puede comprar sólo seis entradas para el espectáculo en la misma sesión!");
             }
-         else
-            MessageBox.showMessageBox(ubticket.getGUIScreen(), "ATENCIÓN", "Se puede comprar sólo seis entradas para el espectáculo en la misma sesión!");
-      }
+        }
+    
     }
     
 }

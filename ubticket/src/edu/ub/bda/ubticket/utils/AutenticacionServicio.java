@@ -1,7 +1,9 @@
 package edu.ub.bda.ubticket.utils;
 
 import edu.ub.bda.ubticket.beans.Usuario;
+import java.util.List;
 import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -38,6 +40,35 @@ public class AutenticacionServicio
             }
         
         }.execute();
+        
+        if ( usuario != null )
+        {
+            List<Object> entradasCompradas = new HibernateTransaction<List<Object>>() {
+
+                @Override
+                public List<Object> run()
+                {
+                    SQLQuery query = session.createSQLQuery("SELECT COUNT(*) AS COUNT, `SESION_ID` AS SESION_ID FROM ENTRADA WHERE USUARIO_ID = :usuario_id GROUP BY `SESION_ID`");
+                    query.setInteger("usuario_id", usuario.getId());
+                    return query.list();
+                }
+        
+            }.execute();
+            
+            try
+            {
+                for ( Object fila : entradasCompradas )
+                {
+                    Object[] columna = (Object[]) fila;
+                    usuario.Sesion("ENTRADAS_SESION_" + (Integer) columna[1], (Integer) columna[0]);
+                }
+            }
+            catch ( Exception ex )
+            {
+                ex.printStackTrace();
+                usuario.vaciarDatosSesion();
+            }
+        }
         
         return usuario != null;
     }

@@ -45,10 +45,17 @@ public class SQLiteDialect extends Dialect
         registerColumnType(Types.BINARY, "blob");
         registerColumnType(Types.VARBINARY, "blob");
         registerColumnType(Types.LONGVARBINARY, "blob");
-        // registerColumnType(Types.NULL, "null");
         registerColumnType(Types.BLOB, "blob");
         registerColumnType(Types.CLOB, "clob");
         registerColumnType(Types.BOOLEAN, "integer");
+        
+        /*
+         * Otro maravilloso cuento de Hibernate: Si no registramos el tipo NULL,
+         * cuando se quiere hacer una query sin entidades (p.e. un COUNT con otros
+         * datos), no se asocia correctamente los tipos entre SQLite y Hibernate.
+         */
+        registerColumnType(Types.NULL, "null");
+        registerHibernateType(Types.NULL, "null");
 
         registerFunction("concat", new VarArgsSQLFunction(org.hibernate.type.StandardBasicTypes.STRING, "", "||", ""));
         registerFunction("mod", new SQLFunctionTemplate(org.hibernate.type.StandardBasicTypes.INTEGER, "?1 % ?2"));
