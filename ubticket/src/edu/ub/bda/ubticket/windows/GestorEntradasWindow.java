@@ -155,6 +155,14 @@ public class GestorEntradasWindow extends Window
             }
             todoPanel.setVisible(true);
         }
+        else
+        {
+            if ( tabla != null )
+                tabla.removeAllRows();
+            
+            pagina = 0;
+            actualizarPagina();
+        }
     }
     
     private class BorrarEntradaAction implements Action
@@ -191,6 +199,10 @@ public class GestorEntradasWindow extends Window
     private String getTextoPagina()
     {
         Integer pag = pagina + 1;
+        
+        if ( maxPaginas == 0 )
+            pag = 0;
+        
         return pag.toString() + " / " + maxPaginas.toString();
     }
     

@@ -35,13 +35,6 @@ public class MenuPrincipalWindow extends Window {
             }
         }));
 
-        addComponent(new Button("Cerrar sesión", new Action() {
-            @Override
-            public void doAction() {
-                ubticket.cerrarSesion();
-            }
-        }));
-
         gestionarContenidosButton = new Button("Gestionar contenidos", new Action() {
             @Override
             public void doAction() {
@@ -59,6 +52,13 @@ public class MenuPrincipalWindow extends Window {
         });
 
         addComponent(vendidasViewWindowButton);
+
+        addComponent(new Button("Cerrar sesión", new Action() {
+            @Override
+            public void doAction() {
+                ubticket.cerrarSesion();
+            }
+        }));
 
         addComponent(new Button("Salir", new Action() {
             @Override

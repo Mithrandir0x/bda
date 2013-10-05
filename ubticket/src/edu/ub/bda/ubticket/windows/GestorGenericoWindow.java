@@ -316,11 +316,23 @@ public class GestorGenericoWindow extends Window
                 tablaPanel.addComponent(tabla);
             }
         }
+        else
+        {
+            if ( tabla != null )
+                tabla.removeAllRows();
+            
+            pagina = 0;
+            actualizarPagina();
+        }
     }
     
     private String getTextoPagina()
     {
         Integer pag = pagina + 1;
+        
+        if ( maxPaginas == 0 )
+            pag = 0;
+        
         return pag.toString() + " / " + maxPaginas.toString();
     }
     
