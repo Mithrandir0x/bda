@@ -29,9 +29,9 @@ import org.hibernate.criterion.Restrictions;
 public class ComprarEntradasWindow extends Window
 {
     
-    private final Button seleccionarEspacioButton;
-    private final Espacio espacio = new Espacio();
-    private final UBTicket ubticket;
+    private UBTicket ubticket;
+    private Button seleccionarEspacioButton;
+    private Espacio espacio = new Espacio();
     private Panel tablaPanel;
     private Table tabla;
     private Label paginaEtiqueta;
@@ -159,6 +159,12 @@ public class ComprarEntradasWindow extends Window
             public void doAction()
             {
                 close();
+                
+                espacio = new Espacio();
+                seleccionarEspacioButton.setText("Ninguno");
+                paginadorPanel.setVisible(false);
+                tablaPanel.removeComponent(tabla);
+                tabla = null;
             }
         
         }));
@@ -167,6 +173,7 @@ public class ComprarEntradasWindow extends Window
     @Override
     public void onVisible()
     {
+        usuario = AutenticacionServicio.GetUsuario();
         this.setFocus(seleccionarEspacioButton);
     }
     
@@ -207,7 +214,7 @@ public class ComprarEntradasWindow extends Window
                 tabla.addRow(new Label(o.getTitulo()),
                         new Label(o.getCategoria().getNombre()),
                         new Label(sesion.getFecha_inicio().toString()),
-                        new Button("Comprar por " + sesion.getPrecio().toString() + "€/"+sesion.getPrecio()*(IVA+100)/100+" IVA inc.", new ComprarEntradaAction(ubticket, sesion)));
+                        new Button("Comprar por " + sesion.getPrecio().toString() + "€/"+sesion.getPrecio()*(IVA+100)/100+" IVA inc.", new ComprarEntradaAction(ubticket, sesion, usuario)));
             }
         
             if ( addComponent )
@@ -248,12 +255,11 @@ public class ComprarEntradasWindow extends Window
         private UBTicket ubticket;
         private Usuario usuario;
         
-        public ComprarEntradaAction(UBTicket ubticket, Sesion sesion)
+        public ComprarEntradaAction(UBTicket ubticket, Sesion sesion, Usuario usuario)
         {
             this.sesion = sesion;
             this.ubticket = ubticket;
-            
-            usuario = AutenticacionServicio.GetUsuario();
+            this.usuario = usuario;
         }
 
         @Override

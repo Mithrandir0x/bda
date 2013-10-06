@@ -1,6 +1,7 @@
 package edu.ub.bda.ubticket.beans;
 
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -135,6 +136,8 @@ public class Usuario {
      */
     public Object Sesion(String clave)
     {
+        //System.out.print(id.toString() + "." +clave + " -> ");
+        //System.out.println(metadatos.containsKey(clave));
         return metadatos.get(clave);
     }
     
@@ -151,6 +154,16 @@ public class Usuario {
     public void vaciarDatosSesion()
     {
         metadatos.clear();
+    }
+    
+    public void printSesion()
+    {
+        for ( Object o : metadatos.keySet() )
+        {
+            String clave = (String) o;
+            System.out.print(id.toString() + "." +clave + " -> ");
+            System.out.println(metadatos.get(clave));
+        }
     }
 
 }
