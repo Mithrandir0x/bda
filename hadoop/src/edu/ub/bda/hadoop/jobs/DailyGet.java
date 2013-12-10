@@ -41,22 +41,24 @@ public class DailyGet {
                 hour = "01";
                 minute = "00";
             }
-            else
+            else 
             {
-                if ( args.length == 3 )
+                if ( args.length == 3 || args.length == 5)
                 {
-                    year = args[0];
-                    month = args[1];
-                    day = args[2];
+                    if ( args.length == 3 )
+                    {
+                        year = args[0];
+                        month = args[1];
+                        day = args[2];
+                    }
                     
                     if ( args.length == 5 )
                     {
+                        year = args[0];
+                        month = args[1];
+                        day = args[2];
                         hour = args[3];
                         minute = args[4];
-                    }
-                    else
-                    {
-                        throw new Exception("Bad arguments");
                     }
                 }
                 else
