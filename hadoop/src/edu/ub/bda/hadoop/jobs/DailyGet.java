@@ -132,7 +132,6 @@ public class DailyGet {
                 executeHiveQueryCli(query);
                 f.delete();
                 
-                f.delete();
                 i++;
             }
             
