@@ -24,7 +24,9 @@ public class DailyGet {
     private static boolean dev = false;
     
     private static String tmpPath = "./";
-    private static String formatQuery = "LOAD DATA LOCAL INPATH ''{0}'' OVERWRITE INTO TABLE bda_wikidump_dcitera_olopez PARTITION (ds=''{1}'')";
+    private static String formatQuery = "LOAD DATA LOCAL INPATH ''{0}'' OVERWRITE INTO TABLE dcitera_olopez.bda_wikidump_dcitera_olopez PARTITION (ds=''{1}'')";
+    
+    private static String filter = "00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17";
     
     private static Pattern linkPattern = Pattern.compile("pagecounts-(\\d{4})(\\d{2})(\\d{2})-(\\d{2})(\\d{2})\\d{2}.gz");
 
@@ -94,7 +96,10 @@ public class DailyGet {
                 else
                 {
                     if ( link.matches("pagecounts-" + year + month + day + "-\\d{6}.gz") ){
-                        filterlinks.add(link);
+                        String lnkHour = link.substring(20, 22);
+                        if ( !filter.contains(lnkHour) ){
+                            filterlinks.add(link);
+                        }
                     }
                 }
             }
@@ -289,12 +294,12 @@ public class DailyGet {
         int ret = process.exitValue();
         
         System.out.println("Log:");
-        printStream(process.getInputStream());
+        //printStream(process.getInputStream());
         
         if ( ret != 0 )
         {
-            System.out.println("Error Log:");
-            printStream(process.getErrorStream());
+            System.out.println("Something went wrong when importing the data to Hive.");
+            //printStream(process.getErrorStream());
             
             throw new Exception("Shell command execution went awry");
         }
