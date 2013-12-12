@@ -81,7 +81,8 @@ public class DailyGet {
             
             FileReader reader = new FileReader(tmpPath + "index.html");
             List<String> links = LinkExtractor(reader);
-
+            (new File(tmpPath + "index.html")).delete();
+            
             List<String> filterlinks = new ArrayList();
             for (String link : links) {
                 if ( hour != null && minute != null )
@@ -113,6 +114,7 @@ public class DailyGet {
                 url = new URL(baseUrl + link);
                 downloadFileFromUrl(url, gzipPath, userAgent);
                 gzUnzipper(gzipPath, unzPath);
+                (new File(gzipPath)).delete();
                 
                 matcher = linkPattern.matcher(link);
         
@@ -130,6 +132,7 @@ public class DailyGet {
                 executeHiveQueryCli(query);
                 f.delete();
                 
+                f.delete();
                 i++;
             }
             
