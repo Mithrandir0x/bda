@@ -40,6 +40,7 @@ public class DailyGet {
                 day = "05";
                 hour = "01";
                 minute = "00";
+                tmpPath = "./tmp/";
             }
             else 
             {
@@ -127,6 +128,7 @@ public class DailyGet {
                 File f = new File(unzPath);
                 String query = MessageFormat.format(formatQuery, f.getAbsolutePath(), year + month + day + "-" + hour + minute);
                 executeHiveQueryCli(query);
+                f.delete();
                 
                 i++;
             }
