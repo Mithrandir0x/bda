@@ -1,10 +1,5 @@
 package edu.ub.bda.hadoop.jobs;
 
-/**
- * This is a task implementation to download wikidumps.
- *
- * @author domenicocitera
- */
 import java.io.*;
 import java.net.*;
 import java.text.MessageFormat;
@@ -18,19 +13,40 @@ import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.parser.ParserDelegator;
 
-public class DailyGet {
+/**
+ * This is a task implementation to download wikidumps.
+ *
+ * @author domenicocitera
+ */
+public class DailyGet
+{
     
+    /**
+     * Flag used to enable download report
+     */
     private static boolean reportDownload = true;
     private static boolean dev = false;
     
     private static String tmpPath = "./";
+    
+    /**
+     * Query used to import wikidumps to the hive table
+     */
     private static String formatQuery = "LOAD DATA LOCAL INPATH ''{0}'' OVERWRITE INTO TABLE dcitera_olopez.bda_wikidump_dcitera_olopez PARTITION (ds=''{1}'')";
     
-    private static String filter = "00, 01, 02, 03, 04, 05, 06, 07, 08, 09, 10, 11, 12, 13, 14, 15, 16, 17";
+    /**
+     * In order to download arbitrary hours for a day, put in this string any hour
+     * not desired and separate it by commas
+     */
+    private static String filter = "";
     
+    /**
+     * Pattern used to search valid links to download
+     */
     private static Pattern linkPattern = Pattern.compile("pagecounts-(\\d{4})(\\d{2})(\\d{2})-(\\d{2})(\\d{2})\\d{2}.gz");
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         try
         {
             String year = null, month = null, day = null, hour = null, minute = null;
@@ -86,7 +102,8 @@ public class DailyGet {
             (new File(tmpPath + "index.html")).delete();
             
             List<String> filterlinks = new ArrayList();
-            for (String link : links) {
+            for (String link : links)
+            {
                 if ( hour != null && minute != null )
                 {
                     if ( link.matches("pagecounts-" + year + month + day + "-" + hour + minute +  "\\d{2}.gz") ){
@@ -148,10 +165,11 @@ public class DailyGet {
     }
 
     /**
+     * This method downloads a file to the local path, with a User Agent specified.
      *
-     * @param url
-     * @param localFile
-     * @param userAgent
+     * @param url The file to download
+     * @param localFile The path where to save the file
+     * @param userAgent The User Agent to use to fake the request sender.
      * @throws IOException
      */
     public static void downloadFileFromUrl(URL url, String localFile, String userAgent) throws IOException
@@ -159,10 +177,12 @@ public class DailyGet {
         InputStream is = null;
         FileOutputStream fstream = null;
 
-        try {
+        try
+        {
             URLConnection urlConn = url.openConnection();
 
-            if (userAgent != null) {
+            if (userAgent != null)
+            {
                 urlConn.setRequestProperty("User-Agent", userAgent);
             }
             urlConn.connect();
@@ -181,7 +201,8 @@ public class DailyGet {
             long bytes = 0;
             long p = 0;
             long op = -1;
-            while ((len = is.read(buffer)) > 0) {
+            while ((len = is.read(buffer)) > 0)
+            {
                 fstream.write(buffer, 0, len);
                 
                 if ( reportDownload && fileSize != -1 )
@@ -196,13 +217,20 @@ public class DailyGet {
                     }
                 }
             }
-        } finally {
-            try {
-                if (is != null) {
+        }
+        finally
+        {
+            try
+            {
+                if (is != null)
+                {
                     is.close();
                 }
-            } finally {
-                if (fstream != null) {
+            }
+            finally
+            {
+                if (fstream != null)
+                {
                     fstream.close();
                 }
             }
@@ -210,9 +238,10 @@ public class DailyGet {
     }
 
     /**
+     * Return a list of links given a file reader pointing to an HTML page.
      * 
-     * @param reader
-     * @return
+     * @param reader The file reader
+     * @return A list of Strings containing the HREF attribute content
      * @throws IOException 
      */
     public static List<String> LinkExtractor(Reader reader) throws IOException
@@ -256,9 +285,10 @@ public class DailyGet {
 
     
     /**
+     * A method to gUnZip a file and output it to a specific path.
      * 
-     * @param gZip_file
-     * @param out_file 
+     * @param gZip_file Path to the GZIP file
+     * @param out_file Path where to output the GZIP contents
      */
     public static void gzUnzipper(String gZip_file, String out_file)
     {
@@ -282,7 +312,11 @@ public class DailyGet {
         }
     }
     
-    
+    /**
+     * Execute a process to execute a Hive Query.
+     * 
+     * @param query The query to be executed by Hive
+     */
     public static void executeHiveQueryCli(String query) throws Exception
     {
         System.out.println("Executing query: " + query);
@@ -305,6 +339,11 @@ public class DailyGet {
         }
     }
     
+    /**
+     * Helper method to allow to print streams.
+     * 
+     * @param stream The stream
+     */
     private static void printStream(InputStream stream) throws Exception
     {
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
