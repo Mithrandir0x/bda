@@ -6,7 +6,7 @@
     <property name="hibernate.connection.driver_class">org.sqlite.JDBC</property>
     <!-- source: http://stackoverflow.com/questions/12019974/include-sqlite-database-in-executable-jar -->
     <!-- property name="hibernate.connection.url">jdbc:sqlite::resource:p01.db</property -->
-    <property name="hibernate.connection.url">jdbc:sqlite:D:/bda_dbs/p01.db</property>
+    <property name="hibernate.connection.url">jdbc:sqlite:/Users/domenicocitera/NetBeansProjects/bda/p01.db</property>
     <property name="hibernate.connection.username" />
     <property name="hibernate.connection.password" />
     <!-- property name="hibernate.default_schema">hibernate</property -->

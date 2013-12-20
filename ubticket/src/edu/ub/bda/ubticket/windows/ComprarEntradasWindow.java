@@ -41,12 +41,6 @@ public class ComprarEntradasWindow extends Window
     
     private int maxEntradasComprables = 6;
     
-    /* private final TextBox dia;
-    private final TextBox mes;
-    private final TextBox anyo;
-    
-    private final TextBox hora;
-    private final TextBox minuto; */
     
     private Integer maxFilas = 10;
     private Integer pagina = 0;
@@ -95,23 +89,6 @@ public class ComprarEntradasWindow extends Window
         espacioPanel.addComponent(seleccionarEspacioButton);
         addComponent(espacioPanel);
         
-        //Calendar calendar = Calendar.getInstance();        
-        
-        /* Panel diasPanel = new Panel(new Border.Invisible(), Panel.Orientation.HORISONTAL);
-        diasPanel.addComponent(new Label(" DIA: "));
-        diasPanel.addComponent(dia = new TextBox(Integer.toString(calendar.get(Calendar.DAY_OF_MONTH)), 3));
-        diasPanel.addComponent(new Label("/"));
-        diasPanel.addComponent(mes = new TextBox(Integer.toString(calendar.get(Calendar.MONTH)), 3));
-        diasPanel.addComponent(new Label("/"));
-        diasPanel.addComponent(anyo = new TextBox(Integer.toString(calendar.get(Calendar.YEAR)), 5));
-        addComponent(diasPanel);
-        
-        Panel horasPanel = new Panel(new Border.Invisible(), Panel.Orientation.HORISONTAL);
-        diasPanel.addComponent(new Label("HORA: "));
-        diasPanel.addComponent(hora = new TextBox(Integer.toString(calendar.get(Calendar.HOUR_OF_DAY)), 2));
-        diasPanel.addComponent(new Label(":"));
-        diasPanel.addComponent(minuto = new TextBox(Integer.toString(calendar.get(Calendar.MINUTE)), 2));
-        addComponent(horasPanel); */
         
         tablaPanel = new Panel(new Border.Invisible(), Panel.Orientation.HORISONTAL);
         addComponent(tablaPanel);
