@@ -1,0 +1,14 @@
+
+.read
+
+ubticket/build/built-jar.properties
+
+ubticket/build/classes/edu/ub/bda/UBTicket.class
+
+ubticket/build/classes/edu/ub/bda/ubticket/beans/Categoria.class
+
+ubticket/build/classes/edu/ub/bda/ubticket/beans/Entrada.class
+
+ubticket/build/classes/edu/ub/bda/ubticket/beans/Espacio.class
+
+*.class
