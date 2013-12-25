@@ -354,5 +354,28 @@ public class GestorGenericoWindow extends Window
         paginaEtiqueta.setText(getTextoPagina());
     }
     
+    /* private void escribirFilaTabla(Object object)
+    {
+        List<Component> fila = new ArrayList<>();
+        
+        try
+        {
+            PropertyDescriptor[] descriptores = Introspector.getBeanInfo(claseEntidad, Object.class).getPropertyDescriptors();
+            
+            for ( PropertyDescriptor descriptorPropiedades : descriptores )
+            {
+                Method m = descriptorPropiedades.getReadMethod();
+                fila.add(new Label(m.invoke(object).toString()));
+            }
+        }
+        catch ( Exception ex )
+        {
+            Logger.getLogger(GestorGenericoWindow.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        Component[] arr = new Component[fila.size()];
+        tabla.addRow(fila.toArray(arr));
+    } */
+    
 }
 
