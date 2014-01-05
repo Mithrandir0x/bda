@@ -32,7 +32,7 @@ public class MostVisitedSite extends Configured implements Tool
     private static final String root = "/user/hive/warehouse";
     private static final String dbName = "dcitera_olopez.db/";
     private static final String tableName = "bda_wikidump_dcitera_olopez";
-    private static final String outRootPath = "/user/olopez/";
+    private static String outRootPath = "";
     private static final boolean dev = false;
     
     /**
@@ -46,9 +46,11 @@ public class MostVisitedSite extends Configured implements Tool
         private static final Pattern inputPattern = Pattern.compile("(.+)(\\s)(.+)(\\s)(\\d+)(\\s)(\\d+)");
 
         /**
-         * @param key - Input key - The line offset in the file - ignored.
-         * @param value - Input Value - This is the line itself.
-         * @param context - Provides access to the OutputCollector and Reporter.
+         * The Map method.
+         * 
+         * @param key The line offset in the file
+         * @param value The line content
+         * @param context Provides access to the OutputCollector and Reporter
          * @throws IOException
          * @throws InterruptedException
          */
@@ -78,9 +80,11 @@ public class MostVisitedSite extends Configured implements Tool
         private Map<String, Integer> maxcont = new HashMap<String, Integer>();
         
         /**
-         * @param key - Input key - Name of the context
-         * @param values - Input Value - Iterator request context
-         * @param context - Used for collecting output
+         * Calculate the sum of requests for each context.
+         * 
+         * @param key A context page from Wikipedia
+         * @param values A collection of numeric values containing the amount of requests for a day
+         * @param context
          * @throws IOException
          * @throws InterruptedException
          */
@@ -102,6 +106,13 @@ public class MostVisitedSite extends Configured implements Tool
             }
         }
 
+        /**
+         * Look up for the context with the maximum requests value.
+         * 
+         * @param context
+         * @throws IOException
+         * @throws InterruptedException 
+         */
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException
         {
@@ -125,7 +136,13 @@ public class MostVisitedSite extends Configured implements Tool
 
     @Override
     public int run(String[] args) throws Exception {
-
+        
+        // Create the job specification object
+        Job job = new Job(getConf());
+        job.setJarByClass(MostVisitedSite.class);
+        job.setJobName(this.getClass().getName());
+        outRootPath = job.getWorkingDirectory().toString();
+ 
         String year = null, month = null, day = null;
 
         if (dev)
@@ -136,22 +153,21 @@ public class MostVisitedSite extends Configured implements Tool
         }
         else
         {
-            if (args.length == 3)
+            if (args.length == 3 || args.length == 4)
             {
                 year = args[0];
                 month = args[1];
                 day = args[2];
+                if ( args.length == 4)
+                {
+                    outRootPath = args[3];
+                }
             }
             else
             {
                 throw new Exception("Bad arguments");
             }
         }
-
-        // Create the job specification object
-        Job job = new Job(getConf());
-        job.setJarByClass(MostVisitedSite.class);
-        job.setJobName(this.getClass().getName());
 
         // Setup input and output paths
         String p = resPath(year + month + day);
@@ -181,6 +197,9 @@ public class MostVisitedSite extends Configured implements Tool
     /**
      * Return a string that contains the paths to each partition of the table for a day, separated by commas.
      * 
+     * @param ymd A partition of the Hive table
+     * @return A comma separated value containing the path of each partition
+     * @throws IOException 
      */
     public static String resPath(String ymd) throws IOException
     {
@@ -198,7 +217,7 @@ public class MostVisitedSite extends Configured implements Tool
                 FileStatus[] status2 = fs.listStatus(statu.getPath());
                 
                 for (FileStatus status21 : status2) {
-                    System.out.println(status21.getPath()); //test file input
+                    System.out.println("\nFile to read: '"+status21.getPath()+"'"); //test file input
                     pts = pts.concat(status21.getPath().toString() + ",");
                 }
             }

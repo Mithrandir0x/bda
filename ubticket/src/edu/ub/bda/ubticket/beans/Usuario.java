@@ -22,7 +22,7 @@ public class Usuario {
     private Timestamp fecha_ultima_compra;
     private String tipo_usuario;
     
-    private Map<String, Object> metadatos = new HashMap<>();
+    private Map<String, Object> metadatos = new HashMap<String, Object>();
 
     public Usuario() {
         login = "";
